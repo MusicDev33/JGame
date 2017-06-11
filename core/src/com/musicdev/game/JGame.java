@@ -28,8 +28,8 @@ public class JGame extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		batch.setProjectionMatrix(cam.camera.combined);
 		world = new World(30, 30);
-		eHandler = new EventHandler(world, cam);
 		player = new Player(1, 1, world);
+		eHandler = new EventHandler(world, cam, player);
 		empty = new Texture("blank.png");
 
 	}
@@ -40,7 +40,7 @@ public class JGame extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		deltaTime = Gdx.graphics.getDeltaTime();
 		update(deltaTime);
-		entityupdate();
+		entityupdate(deltaTime);
 		batch.begin();
 		for (int x = -2 + cam.correctionX / 64; x < world.Width() - (world.Width() - (screenX / 64))
 				+ (cam.correctionX / 64) + 1; x++) {
@@ -66,8 +66,8 @@ public class JGame extends ApplicationAdapter {
 
 	}
 
-	public void entityupdate() {
-		player.update(Gdx.graphics.getDeltaTime(), world);
+	public void entityupdate(float deltaTime) {
+		player.update(deltaTime, world);
 	}
 
 	@Override
@@ -79,7 +79,7 @@ public class JGame extends ApplicationAdapter {
 		cam = new Camera(width, height);
 		cam.camera.update();
 		batch.setProjectionMatrix(cam.camera.combined);
-		eHandler = new EventHandler(world, cam);
+		eHandler = new EventHandler(world, cam, player);
 	}
 
 	@Override

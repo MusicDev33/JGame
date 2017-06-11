@@ -7,7 +7,7 @@ public class Tile {
 
 	String name = "Tile";
 
-	enum TileType {
+	public enum TileType {
 		None, Dirt, Grass, Stone, Water
 	}
 

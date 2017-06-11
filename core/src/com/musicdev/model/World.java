@@ -26,7 +26,7 @@ public class World {
 				startNum += 1;
 
 				n = rand.nextInt(4);
-				tiles[x][y].SetType(Tile.TileType.Dirt);
+
 				switch (n) {
 				case 0:
 					tiles[x][y].SetType(Tile.TileType.Dirt);

@@ -2,16 +2,20 @@ package com.musicdev.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.musicdev.model.Player;
+import com.musicdev.model.Tile;
 import com.musicdev.model.World;
 
 public class EventHandler {
 	float camMoveSpeed = 500;
 	World world;
 	Camera cam;
+	Player player;
 
-	public EventHandler(World world, Camera camera) {
+	public EventHandler(World world, Camera camera, Player player) {
 		this.world = world;
 		this.cam = camera;
+		this.player = player;
 	}
 
 	public void update(float deltaTime) {
@@ -42,6 +46,10 @@ public class EventHandler {
 			else {
 
 			}
+
+		else if (Gdx.input.isKeyPressed(Keys.SPACE)) {
+			world.GetTileAt(player.getX(), player.getY()).SetType(Tile.TileType.Dirt);
+		}
 
 	}
 }
