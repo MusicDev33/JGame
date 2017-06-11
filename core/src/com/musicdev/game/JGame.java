@@ -2,7 +2,6 @@ package com.musicdev.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -26,10 +25,10 @@ public class JGame extends ApplicationAdapter {
 	@Override
 	public void create() {
 		cam = new Camera(screenX, screenY);
-		eHandler = new EventHandler(world, cam);
 		batch = new SpriteBatch();
 		batch.setProjectionMatrix(cam.camera.combined);
 		world = new World(30, 30);
+		eHandler = new EventHandler(world, cam);
 		player = new Player(1, 1, world);
 		empty = new Texture("blank.png");
 
@@ -63,33 +62,7 @@ public class JGame extends ApplicationAdapter {
 	}
 
 	public void update(float deltaTime) {
-		if (Gdx.input.isKeyPressed(Keys.D))
-			if (cam.correctionX < (world.Width() * 64) - screenX / 2)
-				cam.move(eHandler.camMoveSpeed, 0, deltaTime);
-			else {
-
-			}
-
-		else if (Gdx.input.isKeyPressed(Keys.A))
-			if (cam.correctionX > -screenX / 2)
-				cam.move(-eHandler.camMoveSpeed, 0, deltaTime);
-			else {
-
-			}
-
-		else if (Gdx.input.isKeyPressed(Keys.W))
-			if (cam.correctionY < (world.Height() * 64) - screenY / 2)
-				cam.move(0, eHandler.camMoveSpeed, deltaTime);
-			else {
-
-			}
-
-		else if (Gdx.input.isKeyPressed(Keys.S))
-			if (cam.correctionY > -screenY / 2)
-				cam.move(0, -eHandler.camMoveSpeed, deltaTime);
-			else {
-
-			}
+		eHandler.update(deltaTime);
 
 	}
 
@@ -103,10 +76,10 @@ public class JGame extends ApplicationAdapter {
 		screenY = height;
 		cam.camera.viewportHeight = height;
 		cam.camera.viewportWidth = width;
-		cam.camera.setToOrtho(false, width, height);
+		cam = new Camera(width, height);
 		cam.camera.update();
-		cam.camera.position.set(width / 2, height / 2, 0);
 		batch.setProjectionMatrix(cam.camera.combined);
+		eHandler = new EventHandler(world, cam);
 	}
 
 	@Override

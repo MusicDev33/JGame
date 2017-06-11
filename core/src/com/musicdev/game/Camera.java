@@ -9,7 +9,12 @@ public class Camera {
 	int correctionX = 0;
 	int correctionY = 0;
 
+	float screenX;
+	float screenY;
+
 	public Camera(float x, float y) {
+		screenX = x;
+		screenY = y;
 		camera.setToOrtho(false, x, y);
 		camera.position.set(x / 2, y / 2, 0);
 	}
