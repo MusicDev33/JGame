@@ -65,28 +65,28 @@ public class JGame extends ApplicationAdapter {
 	public void update(float deltaTime) {
 		if (Gdx.input.isKeyPressed(Keys.D))
 			if (cam.correctionX < (world.Width() * 64) - screenX / 2)
-				moveCamera(eHandler.camMoveSpeed, 0);
+				cam.move(eHandler.camMoveSpeed, 0, deltaTime);
 			else {
 
 			}
 
 		else if (Gdx.input.isKeyPressed(Keys.A))
 			if (cam.correctionX > -screenX / 2)
-				moveCamera(-eHandler.camMoveSpeed, 0);
+				cam.move(-eHandler.camMoveSpeed, 0, deltaTime);
 			else {
 
 			}
 
 		else if (Gdx.input.isKeyPressed(Keys.W))
 			if (cam.correctionY < (world.Height() * 64) - screenY / 2)
-				moveCamera(0, eHandler.camMoveSpeed);
+				cam.move(0, eHandler.camMoveSpeed, deltaTime);
 			else {
 
 			}
 
 		else if (Gdx.input.isKeyPressed(Keys.S))
 			if (cam.correctionY > -screenY / 2)
-				moveCamera(0, -eHandler.camMoveSpeed);
+				cam.move(0, -eHandler.camMoveSpeed, deltaTime);
 			else {
 
 			}
@@ -114,13 +114,4 @@ public class JGame extends ApplicationAdapter {
 		batch.dispose();
 
 	}
-
-	public void moveCamera(float x, float y) {
-		cam.camera.position.x += x * Gdx.graphics.getDeltaTime();
-		cam.camera.position.y += y * Gdx.graphics.getDeltaTime();
-		cam.correctionX += x * Gdx.graphics.getDeltaTime();
-		cam.correctionY += y * Gdx.graphics.getDeltaTime();
-
-	}
-
 }

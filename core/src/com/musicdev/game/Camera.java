@@ -14,4 +14,11 @@ public class Camera {
 		camera.position.set(x / 2, y / 2, 0);
 	}
 
+	public void move(float x, float y, float dTime) {
+		camera.position.x += x * dTime;
+		camera.position.y += y * dTime;
+		correctionX += x * dTime;
+		correctionY += y * dTime;
+	}
+
 }
