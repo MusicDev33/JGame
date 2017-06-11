@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.musicdev.model.Player;
 import com.musicdev.model.World;
 
 public class JGame extends ApplicationAdapter {
@@ -14,6 +15,7 @@ public class JGame extends ApplicationAdapter {
 	World world;
 	OrthographicCamera camera = new OrthographicCamera();
 	Texture empty;
+	Player player;
 
 	int startNum = 0;
 	float deltaTime;
@@ -34,7 +36,8 @@ public class JGame extends ApplicationAdapter {
 		camera.position.set(screenX / 2, screenY / 2, 0);
 		batch = new SpriteBatch();
 		batch.setProjectionMatrix(camera.combined);
-		world = new World(300, 300);
+		world = new World(30, 30);
+		player = new Player(1, 1, world);
 		empty = new Texture("blank.png");
 
 	}
@@ -45,10 +48,11 @@ public class JGame extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		deltaTime = Gdx.graphics.getDeltaTime();
 		update(deltaTime);
+		entityupdate();
 		batch.begin();
-		for (int x = -1 + camCorrectionX / 64; x < world.Width() - (world.Width() - (screenX / 64))
+		for (int x = -2 + camCorrectionX / 64; x < world.Width() - (world.Width() - (screenX / 64))
 				+ (camCorrectionX / 64) + 1; x++) {
-			for (int y = -1 + camCorrectionY / 64; y < world.Height() - (world.Height() - (screenY / 64))
+			for (int y = -2 + camCorrectionY / 64; y < world.Height() - (world.Height() - (screenY / 64))
 					+ (camCorrectionY / 64) + 1; y++) {
 
 				if (x >= world.Width() || y >= world.Height() || x < 0 || y < 0) {
@@ -58,6 +62,8 @@ public class JGame extends ApplicationAdapter {
 				}
 			}
 		}
+
+		batch.draw(player.getImg(), (player.getX() * 64) - camCorrectionX, (player.getY() * 64) - camCorrectionY);
 		batch.end();
 		Gdx.graphics.setTitle("JGame " + Integer.toString(Gdx.graphics.getFramesPerSecond()) + " FPS");
 
@@ -92,6 +98,10 @@ public class JGame extends ApplicationAdapter {
 
 			}
 
+	}
+
+	public void entityupdate() {
+		player.update(Gdx.graphics.getDeltaTime(), world);
 	}
 
 	@Override
