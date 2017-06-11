@@ -4,12 +4,14 @@ import java.util.Random;
 import java.util.Timer;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.musicdev.model.Tile.TileType;
 
 public class Player {
 	int x;
 	int y;
 	int nx;
 	int ny;
+	int n;
 	boolean isTimerOn = false;
 	long startTime;
 	long elapsedTime;
@@ -42,6 +44,14 @@ public class Player {
 		nx = rand.nextInt(3) - 1;
 		ny = rand.nextInt(3) - 1;
 		move(nx, ny);
+		randomPlace();
+	}
+
+	public void randomPlace() {
+		n = rand.nextInt(2);
+		if (n == 1) {
+			world.GetTileAt(x, y).SetType(TileType.Water);
+		}
 	}
 
 	public void update(float deltaTime, World world) {
