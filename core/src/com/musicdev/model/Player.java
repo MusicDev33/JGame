@@ -50,7 +50,7 @@ public class Player {
 			isTimerOn = true;
 		}
 		elapsedTime = System.currentTimeMillis() - startTime;
-		if (elapsedTime >= 1000) {
+		if (elapsedTime >= 200) {
 			wander();
 			isTimerOn = false;
 		}
