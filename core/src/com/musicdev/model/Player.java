@@ -44,7 +44,7 @@ public class Player {
 		nx = rand.nextInt(3) - 1;
 		ny = rand.nextInt(3) - 1;
 		move(nx, ny);
-		randomPlace();
+		// randomPlace();
 	}
 
 	public void randomPlace() {

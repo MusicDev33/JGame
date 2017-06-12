@@ -1,6 +1,7 @@
 package com.musicdev.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
 import com.musicdev.model.Player;
 import com.musicdev.model.Tile;
@@ -53,7 +54,7 @@ public class EventHandler {
 			world.GetTileAt(player.getX(), player.getY()).SetType(Tile.TileType.Dirt);
 		}
 
-		else if (Gdx.input.justTouched()) {
+		else if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
 			tileHover(handleMouseX(deltaTime), handleMouseY(deltaTime)).SetType(TileType.Stone);
 		}
 

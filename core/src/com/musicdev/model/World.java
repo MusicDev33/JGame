@@ -29,15 +29,14 @@ public class World {
 
 	public void CreateMap() {
 		double[][] result = new double[wid][hei];
-		int counter = 0;
-		simplex = new SimplexNoise(100, 0.1, 4000);
+		n = rand.nextInt(4000);
+		simplex = new SimplexNoise(1000, 0.1, n);
 		for (int x = 0; x < wid; x++) {
 			for (int y = 0; y < hei; y++) {
 				tiles[x][y] = new Tile(this, x, y);
 
 				int i = (int) (x * wid);
 				int j = (int) (y * hei);
-				counter += 1;
 				result[x][y] = 0.5 * (1 + simplex.getNoise(i, j));
 				if (result[x][y] <= .48) {
 					tiles[x][y].SetType(Tile.TileType.Water);
@@ -50,7 +49,6 @@ public class World {
 				else if (result[x][y] > .51) {
 					tiles[x][y].SetType(Tile.TileType.Grass);
 				}
-				System.out.println(result[x][y] + " - " + counter);
 			}
 		}
 	}
