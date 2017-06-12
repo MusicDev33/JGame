@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.musicdev.model.Player;
 import com.musicdev.model.Tile;
+import com.musicdev.model.Tile.TileType;
 import com.musicdev.model.World;
 
 public class EventHandler {
@@ -52,6 +53,10 @@ public class EventHandler {
 			world.GetTileAt(player.getX(), player.getY()).SetType(Tile.TileType.Dirt);
 		}
 
+		else if (Gdx.input.justTouched()) {
+			tileHover(handleMouseX(deltaTime), handleMouseY(deltaTime)).SetType(TileType.Stone);
+		}
+
 	}
 
 	public int handleMouseX(float deltaTime) {
@@ -68,7 +73,7 @@ public class EventHandler {
 		return xy;
 	}
 
-	public String tileHover(int x, int y) {
-		return world.GetTileAt(x, y).GetType();
+	public Tile tileHover(int x, int y) {
+		return world.GetTileAt(x, y);
 	}
 }
