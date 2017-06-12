@@ -2,11 +2,15 @@ package com.musicdev.model;
 
 import java.util.Random;
 
+import com.musicdev.mapgen.SimplexNoise;
+
 public class World {
 
 	Tile[][] tiles;
 	int wid;
 	int hei;
+
+	SimplexNoise simplex;
 
 	int startNum;
 
@@ -19,6 +23,39 @@ public class World {
 
 		tiles = new Tile[wid][hei];
 
+		System.out.println("Map created with " + wid * hei + " tiles.");
+		CreateMap();
+	}
+
+	public void CreateMap() {
+		double[][] result = new double[wid][hei];
+		int counter = 0;
+		simplex = new SimplexNoise(100, 0.1, 4000);
+		for (int x = 0; x < wid; x++) {
+			for (int y = 0; y < hei; y++) {
+				tiles[x][y] = new Tile(this, x, y);
+
+				int i = (int) (x * wid);
+				int j = (int) (y * hei);
+				counter += 1;
+				result[x][y] = 0.5 * (1 + simplex.getNoise(i, j));
+				if (result[x][y] <= .48) {
+					tiles[x][y].SetType(Tile.TileType.Water);
+				}
+
+				else if (result[x][y] > .48 && result[x][y] <= .51) {
+					tiles[x][y].SetType(Tile.TileType.Dirt);
+				}
+
+				else if (result[x][y] > .51) {
+					tiles[x][y].SetType(Tile.TileType.Grass);
+				}
+				System.out.println(result[x][y] + " - " + counter);
+			}
+		}
+	}
+
+	public void CreateMap2() {
 		for (int x = 0; x < wid; x++) {
 			for (int y = 0; y < hei; y++) {
 				tiles[x][y] = new Tile(this, x, y);
@@ -47,8 +84,6 @@ public class World {
 
 			}
 		}
-
-		System.out.println("Map created with " + wid * hei + " tiles.");
 	}
 
 	public Tile GetTileAt(int x, int y) {
