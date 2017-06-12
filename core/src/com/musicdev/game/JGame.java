@@ -13,6 +13,7 @@ public class JGame extends ApplicationAdapter {
 	World world;
 	EventHandler eHandler;
 	Texture empty;
+	Texture select;
 	Player player;
 	Camera cam;
 
@@ -27,10 +28,12 @@ public class JGame extends ApplicationAdapter {
 		cam = new Camera(screenX, screenY);
 		batch = new SpriteBatch();
 		batch.setProjectionMatrix(cam.camera.combined);
+		batch.enableBlending();
 		world = new World(30, 30);
 		player = new Player(1, 1, world);
 		eHandler = new EventHandler(world, cam, player);
 		empty = new Texture("blank.png");
+		select = new Texture("selecttile.png");
 
 	}
 
@@ -54,7 +57,8 @@ public class JGame extends ApplicationAdapter {
 				}
 			}
 		}
-
+		batch.draw(select, (eHandler.handleMouseX(deltaTime) * 64) - cam.correctionX,
+				(eHandler.handleMouseY(deltaTime) * 64) - cam.correctionY);
 		batch.draw(player.getImg(), (player.getX() * 64) - cam.correctionX, (player.getY() * 64) - cam.correctionY);
 		batch.end();
 		Gdx.graphics.setTitle("JGame " + Integer.toString(Gdx.graphics.getFramesPerSecond()) + " FPS");

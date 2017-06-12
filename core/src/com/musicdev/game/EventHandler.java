@@ -19,6 +19,7 @@ public class EventHandler {
 	}
 
 	public void update(float deltaTime) {
+		System.out.println(handleMouseY(deltaTime));
 		if (Gdx.input.isKeyPressed(Keys.D))
 			if (cam.correctionX < (world.Width() * 64) - cam.screenX / 2)
 				this.cam.move(camMoveSpeed, 0, deltaTime);
@@ -51,5 +52,13 @@ public class EventHandler {
 			world.GetTileAt(player.getX(), player.getY()).SetType(Tile.TileType.Dirt);
 		}
 
+	}
+
+	public int handleMouseX(float deltaTime) {
+		return (Gdx.input.getX() + cam.correctionX) / 64;
+	}
+
+	public int handleMouseY(float deltaTime) {
+		return ((Math.round(cam.screenY) - Gdx.input.getY()) + cam.correctionY) / 64;
 	}
 }
