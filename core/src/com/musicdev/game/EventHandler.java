@@ -67,4 +67,8 @@ public class EventHandler {
 		xy[1] = ((Math.round(cam.screenY) - Gdx.input.getY()) + cam.correctionY);
 		return xy;
 	}
+
+	public String tileHover(int x, int y) {
+		return world.GetTileAt(x, y).GetType();
+	}
 }

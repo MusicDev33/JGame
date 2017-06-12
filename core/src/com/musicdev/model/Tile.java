@@ -40,6 +40,10 @@ public class Tile {
 		this.img = new Texture(this.type.toString().toLowerCase() + ".png");
 	}
 
+	public String GetType() {
+		return this.type.toString();
+	}
+
 	public Texture GetImg() {
 		return this.img;
 	}
