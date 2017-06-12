@@ -57,8 +57,12 @@ public class JGame extends ApplicationAdapter {
 				}
 			}
 		}
-		batch.draw(select, (eHandler.handleMouseX(deltaTime) * 64) - cam.correctionX,
-				(eHandler.handleMouseY(deltaTime) * 64) - cam.correctionY);
+		if (eHandler.handleMouseX(deltaTime) < world.Width() && eHandler.handleMouseY(deltaTime) < world.Height()
+				&& (eHandler.rawMouse(deltaTime)[0]) > 0 && (eHandler.rawMouse(deltaTime)[1]) > 0) {
+			batch.draw(select, (eHandler.handleMouseX(deltaTime) * 64) - cam.correctionX,
+					(eHandler.handleMouseY(deltaTime) * 64) - cam.correctionY);
+		}
+
 		batch.draw(player.getImg(), (player.getX() * 64) - cam.correctionX, (player.getY() * 64) - cam.correctionY);
 		batch.end();
 		Gdx.graphics.setTitle("JGame " + Integer.toString(Gdx.graphics.getFramesPerSecond()) + " FPS");

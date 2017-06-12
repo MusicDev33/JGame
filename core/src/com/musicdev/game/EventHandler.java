@@ -11,6 +11,7 @@ public class EventHandler {
 	World world;
 	Camera cam;
 	Player player;
+	int[] xy = new int[2];
 
 	public EventHandler(World world, Camera camera, Player player) {
 		this.world = world;
@@ -19,7 +20,6 @@ public class EventHandler {
 	}
 
 	public void update(float deltaTime) {
-		System.out.println(handleMouseY(deltaTime));
 		if (Gdx.input.isKeyPressed(Keys.D))
 			if (cam.correctionX < (world.Width() * 64) - cam.screenX / 2)
 				this.cam.move(camMoveSpeed, 0, deltaTime);
@@ -60,5 +60,11 @@ public class EventHandler {
 
 	public int handleMouseY(float deltaTime) {
 		return ((Math.round(cam.screenY) - Gdx.input.getY()) + cam.correctionY) / 64;
+	}
+
+	public int[] rawMouse(float deltaTime) {
+		xy[0] = Gdx.input.getX() + cam.correctionX;
+		xy[1] = ((Math.round(cam.screenY) - Gdx.input.getY()) + cam.correctionY);
+		return xy;
 	}
 }
