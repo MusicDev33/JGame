@@ -55,6 +55,15 @@ public class JGame extends ApplicationAdapter {
 				} else {
 					batch.draw(world.GetTileAt(x, y).GetImg(), (x * 64) - cam.correctionX, (y * 64) - cam.correctionY);
 				}
+
+				if (x < world.Width() && y < world.Height() && x >= 0 && y >= 0) {
+
+					if (world.GetTileAt(x, y).hasObject == true) {
+						batch.draw(world.GetTileAt(x, y).GetInstalledImg(), (x * 64) - cam.correctionX,
+								(y * 64) - cam.correctionY);
+					}
+				}
+
 			}
 		}
 		if (eHandler.handleMouseX(deltaTime) < world.Width() && eHandler.handleMouseY(deltaTime) < world.Height()

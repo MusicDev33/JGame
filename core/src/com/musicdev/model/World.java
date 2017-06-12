@@ -29,7 +29,7 @@ public class World {
 
 	public void CreateMap() {
 		double[][] result = new double[wid][hei];
-		n = rand.nextInt(4000);
+		n = rand.nextInt(9999);
 		simplex = new SimplexNoise(1000, 0.1, n);
 		for (int x = 0; x < wid; x++) {
 			for (int y = 0; y < hei; y++) {

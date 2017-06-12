@@ -12,6 +12,10 @@ public class Player {
 	int nx;
 	int ny;
 	int n;
+
+	int destinationX;
+	int destinationY;
+
 	boolean isTimerOn = false;
 	long startTime;
 	long elapsedTime;

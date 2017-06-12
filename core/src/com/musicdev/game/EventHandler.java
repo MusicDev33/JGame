@@ -5,7 +5,6 @@ import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
 import com.musicdev.model.Player;
 import com.musicdev.model.Tile;
-import com.musicdev.model.Tile.TileType;
 import com.musicdev.model.World;
 
 public class EventHandler {
@@ -55,7 +54,12 @@ public class EventHandler {
 		}
 
 		else if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
-			tileHover(handleMouseX(deltaTime), handleMouseY(deltaTime)).SetType(TileType.Stone);
+			try {
+				tileHover(handleMouseX(deltaTime), handleMouseY(deltaTime)).Install(Tile.Installed.Doormat);
+			} catch (NullPointerException e1) {
+
+			}
+
 		}
 
 	}
