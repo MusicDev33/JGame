@@ -56,6 +56,7 @@ public class EventHandler {
 		else if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
 			try {
 				tileHover(handleMouseX(deltaTime), handleMouseY(deltaTime)).Install(Tile.Installed.Doormat);
+				player.Build(Tile.Installed.Doormat, handleMouseX(deltaTime), handleMouseY(deltaTime));
 			} catch (NullPointerException e1) {
 
 			}

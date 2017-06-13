@@ -4,6 +4,7 @@ import java.util.Random;
 import java.util.Timer;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.musicdev.model.Tile.Installed;
 import com.musicdev.model.Tile.TileType;
 
 public class Player {
@@ -15,6 +16,8 @@ public class Player {
 
 	int destinationX;
 	int destinationY;
+
+	boolean hasDestination = false;
 
 	boolean isTimerOn = false;
 	long startTime;
@@ -44,11 +47,32 @@ public class Player {
 		}
 	}
 
+	public void Build(Installed object, int x, int y) {
+		hasDestination = true;
+		destinationX = x;
+		destinationY = y;
+	}
+
+	public void Pathfind(int x, int y) {
+		System.out.println("Find");
+		if ((this.x - x) < 0) {
+			move(1, 0);
+		} else if ((this.x - x) > 0) {
+			move(-1, 0);
+		}
+
+		if ((this.y - y) < 0 && this.x - x == 0) {
+			move(0, 1);
+		} else if ((this.y - y) > 0 && this.x - x == 0) {
+			move(0, -1);
+		}
+	}
+
 	public void wander() {
 		nx = rand.nextInt(3) - 1;
 		ny = rand.nextInt(3) - 1;
 		move(nx, ny);
-		// randomPlace();
+		System.out.println("Wander");
 	}
 
 	public void randomPlace() {
@@ -65,7 +89,12 @@ public class Player {
 		}
 		elapsedTime = System.currentTimeMillis() - startTime;
 		if (elapsedTime >= 200) {
-			wander();
+			if (hasDestination == true) {
+				Pathfind(destinationX, destinationY);
+			} else {
+				wander();
+			}
+
 			isTimerOn = false;
 		}
 	}
