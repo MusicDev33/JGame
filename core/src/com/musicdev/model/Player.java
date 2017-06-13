@@ -17,6 +17,7 @@ public class Player {
 	int destinationY;
 
 	boolean hasDestination = false;
+	boolean isBuilding = false;
 
 	boolean isTimerOn = false;
 	long startTime;
@@ -70,7 +71,8 @@ public class Player {
 		}
 
 		if (this.x == x && this.y == y) {
-			Build(this.x, this.y);
+			isBuilding = true;
+			startTime = System.currentTimeMillis();
 		}
 	}
 
@@ -89,19 +91,29 @@ public class Player {
 	}
 
 	public void update(float deltaTime, World world) {
-		if (isTimerOn == false) {
-			startTime = System.currentTimeMillis();
-			isTimerOn = true;
-		}
-		elapsedTime = System.currentTimeMillis() - startTime;
-		if (elapsedTime >= 200) {
-			if (hasDestination == true) {
-				Pathfind(destinationX, destinationY);
-			} else {
-				wander();
+		if (isBuilding == false) {
+			if (isTimerOn == false) {
+				startTime = System.currentTimeMillis();
+				isTimerOn = true;
 			}
+			elapsedTime = System.currentTimeMillis() - startTime;
+			if (elapsedTime >= 200) {
+				if (hasDestination == true) {
+					Pathfind(destinationX, destinationY);
+				} else {
+					wander();
+				}
 
-			isTimerOn = false;
+				isTimerOn = false;
+			}
+		}
+
+		else if (isBuilding == true) {
+			elapsedTime = System.currentTimeMillis() - startTime;
+			if (elapsedTime >= 400) {
+				Build(this.x, this.y);
+				isBuilding = false;
+			}
 		}
 	}
 
@@ -119,6 +131,10 @@ public class Player {
 
 	public void movePlayer(int x, int y) {
 
+	}
+
+	public void Building() {
+		isBuilding = true;
 	}
 
 }
