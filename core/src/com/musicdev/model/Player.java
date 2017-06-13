@@ -54,7 +54,6 @@ public class Player {
 	}
 
 	public void Pathfind(int x, int y) {
-		System.out.println("Find");
 		if ((this.x - x) < 0) {
 			move(1, 0);
 		} else if ((this.x - x) > 0) {
@@ -72,7 +71,7 @@ public class Player {
 		nx = rand.nextInt(3) - 1;
 		ny = rand.nextInt(3) - 1;
 		move(nx, ny);
-		System.out.println("Wander");
+
 	}
 
 	public void randomPlace() {
