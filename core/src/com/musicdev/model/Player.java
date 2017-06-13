@@ -13,6 +13,8 @@ public class Player {
 	int ny;
 	int n;
 
+	public long buildPercentage = 0;
+
 	int destinationX;
 	int destinationY;
 
@@ -52,6 +54,7 @@ public class Player {
 	}
 
 	public void PreBuild(int x, int y) {
+		buildPercentage = 0;
 		hasDestination = true;
 		destinationX = x;
 		destinationY = y;
@@ -110,9 +113,12 @@ public class Player {
 
 		else if (isBuilding == true) {
 			elapsedTime = System.currentTimeMillis() - startTime;
+			buildPercentage = elapsedTime / 4;
 			if (elapsedTime >= 400) {
 				Build(this.x, this.y);
 				isBuilding = false;
+				hasDestination = false;
+				buildPercentage = 0;
 			}
 		}
 	}

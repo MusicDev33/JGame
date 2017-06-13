@@ -71,10 +71,11 @@ public class JGame extends ApplicationAdapter {
 			batch.draw(select, (eHandler.handleMouseX(deltaTime) * 64) - cam.correctionX,
 					(eHandler.handleMouseY(deltaTime) * 64) - cam.correctionY);
 			Gdx.graphics.setTitle("JGame " + Integer.toString(Gdx.graphics.getFramesPerSecond()) + " FPS "
-					+ eHandler.tileHover(eHandler.handleMouseX(deltaTime), eHandler.handleMouseY(deltaTime)).GetType());
+					+ eHandler.tileHover(eHandler.handleMouseX(deltaTime), eHandler.handleMouseY(deltaTime)).GetType()
+					+ " " + player.buildPercentage + "%");
 		} else {
-			Gdx.graphics.setTitle(
-					"JGame " + Integer.toString(Gdx.graphics.getFramesPerSecond()) + " FPS " + "No Tile Selected");
+			Gdx.graphics.setTitle("JGame " + Integer.toString(Gdx.graphics.getFramesPerSecond()) + " FPS "
+					+ "No Tile Selected" + player.buildPercentage + "%");
 		}
 
 		batch.draw(player.getImg(), (player.getX() * 64) - cam.correctionX, (player.getY() * 64) - cam.correctionY);
