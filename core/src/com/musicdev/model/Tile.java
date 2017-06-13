@@ -13,13 +13,15 @@ public class Tile {
 	}
 
 	public enum Installed {
-		None, Wall1, Doormat
+		None, Wall1, Doormat, Installing
 	}
 
 	public boolean hasObject = false;
+	public boolean installing = false;
 
 	TileType type = TileType.None;
 	Installed object = Installed.None;
+	Installed nextObject = Installed.None;
 
 	LockedObject lockedObject;
 	FreeObject freeObject;
@@ -60,9 +62,16 @@ public class Tile {
 		return this.installImg;
 	}
 
-	public void Install(Installed object) {
+	public void PreInstall(Installed object) {
 		this.hasObject = true;
-		this.object = object;
+		this.installing = true;
+		this.nextObject = object;
+		this.installImg = new Texture("installing.png");
+
+	}
+
+	public void Install() {
+		this.object = this.nextObject;
 		this.installImg = new Texture(this.object.toString().toLowerCase() + ".png");
 
 	}

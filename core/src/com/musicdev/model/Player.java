@@ -4,7 +4,6 @@ import java.util.Random;
 import java.util.Timer;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.musicdev.model.Tile.Installed;
 import com.musicdev.model.Tile.TileType;
 
 public class Player {
@@ -47,7 +46,11 @@ public class Player {
 		}
 	}
 
-	public void Build(Installed object, int x, int y) {
+	public void Build(int x, int y) {
+		world.GetTileAt(x, y).Install();
+	}
+
+	public void PreBuild(int x, int y) {
 		hasDestination = true;
 		destinationX = x;
 		destinationY = y;
@@ -64,6 +67,10 @@ public class Player {
 			move(0, 1);
 		} else if ((this.y - y) > 0 && this.x - x == 0) {
 			move(0, -1);
+		}
+
+		if (this.x == x && this.y == y) {
+			Build(this.x, this.y);
 		}
 	}
 
