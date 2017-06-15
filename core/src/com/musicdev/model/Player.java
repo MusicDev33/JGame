@@ -39,12 +39,18 @@ public class Player {
 	public void move(int x, int y) {
 		if (this.x == 0 && x < 0) {
 			this.x += Math.abs(x);
+		} else if (this.x == world.Width() - 1 && x > 0) {
+			this.x += -Math.abs(x);
 		} else {
 			this.x += x;
 		}
 		if (this.y == 0 && y < 0) {
 			this.y += Math.abs(y);
-		} else {
+		} else if (this.y == world.Height() - 1 && y > 0) {
+			this.y += -Math.abs(y);
+		}
+
+		else {
 			this.y += y;
 		}
 	}

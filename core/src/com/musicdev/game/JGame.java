@@ -45,9 +45,9 @@ public class JGame extends ApplicationAdapter {
 		update(deltaTime);
 		entityupdate(deltaTime);
 		batch.begin();
-		for (int x = -2 + cam.correctionX / 64; x < world.Width() - (world.Width() - (screenX / 64))
+		for (int x = -3 + cam.correctionX / 64; x < world.Width() - (world.Width() - (screenX / 64))
 				+ (cam.correctionX / 64) + 1; x++) {
-			for (int y = -2 + cam.correctionY / 64; y < world.Height() - (world.Height() - (screenY / 64))
+			for (int y = -3 + cam.correctionY / 64; y < world.Height() - (world.Height() - (screenY / 64))
 					+ (cam.correctionY / 64) + 1; y++) {
 
 				if (x >= world.Width() || y >= world.Height() || x < 0 || y < 0) {
@@ -75,7 +75,7 @@ public class JGame extends ApplicationAdapter {
 					+ " " + player.buildPercentage + "%");
 		} else {
 			Gdx.graphics.setTitle("JGame " + Integer.toString(Gdx.graphics.getFramesPerSecond()) + " FPS "
-					+ "No Tile Selected" + player.buildPercentage + "%");
+					+ "No Tile Selected" + " " + player.buildPercentage + "%");
 		}
 
 		batch.draw(player.getImg(), (player.getX() * 64) - cam.correctionX, (player.getY() * 64) - cam.correctionY);
