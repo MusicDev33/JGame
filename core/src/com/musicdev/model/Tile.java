@@ -73,6 +73,7 @@ public class Tile {
 	public void Install() {
 		this.object = this.nextObject;
 		this.installImg = new Texture(this.object.toString().toLowerCase() + ".png");
+		this.installing = false;
 
 	}
 

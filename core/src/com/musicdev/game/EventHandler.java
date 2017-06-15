@@ -13,6 +13,7 @@ public class EventHandler {
 	Camera cam;
 	Player player;
 	int[] xy = new int[2];
+	int tileOrder = 1;
 
 	public EventHandler(World world, Camera camera, Player player) {
 		this.world = world;
@@ -56,7 +57,9 @@ public class EventHandler {
 		else if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
 			try {
 				tileHover(handleMouseX(deltaTime), handleMouseY(deltaTime)).PreInstall(Tile.Installed.Doormat);
-				player.PreBuild(handleMouseX(deltaTime), handleMouseY(deltaTime));
+				// player.PreBuild(handleMouseX(deltaTime),
+				// handleMouseY(deltaTime));
+
 			} catch (NullPointerException e1) {
 
 			}

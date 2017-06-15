@@ -29,6 +29,12 @@ public class Player {
 	Texture img;
 	Timer timer = new Timer();
 
+	int tileDistance = 0;
+	int nextTileDistance = 0;
+	Tile nextTile;
+
+	boolean installingTileExists = false;
+
 	public Player(int x, int y, World world) {
 		this.x = x;
 		this.y = y;
@@ -57,6 +63,7 @@ public class Player {
 
 	public void Build(int x, int y) {
 		world.GetTileAt(x, y).Install();
+		nextTileDistance = 0;
 	}
 
 	public void PreBuild(int x, int y) {
@@ -64,6 +71,27 @@ public class Player {
 		hasDestination = true;
 		destinationX = x;
 		destinationY = y;
+	}
+
+	public void Otherbuild() {
+		for (int x = 0; x < world.Width(); x++) {
+			for (int y = 0; y < world.Height(); y++) {
+				if (world.GetTileAt(x, y).installing == true) {
+					double a = Math.abs(this.x - x);
+					double b = Math.abs(this.y - y);
+					tileDistance = (int) Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
+					if (tileDistance > nextTileDistance) {
+						nextTileDistance = tileDistance;
+						nextTile = world.GetTileAt(x, y);
+						PreBuild(nextTile.x, nextTile.y);
+						System.out.println("Searching");
+					}
+
+				}
+			}
+		}
+		// PreBuild(nextTile.x, nextTile.y);
+
 	}
 
 	public void Pathfind(int x, int y) {
@@ -106,7 +134,7 @@ public class Player {
 				isTimerOn = true;
 			}
 			elapsedTime = System.currentTimeMillis() - startTime;
-			if (elapsedTime >= 200) {
+			if (elapsedTime >= 800) {
 				if (hasDestination == true) {
 					Pathfind(destinationX, destinationY);
 				} else {
@@ -127,6 +155,10 @@ public class Player {
 				buildPercentage = 0;
 			}
 		}
+		if (hasDestination == false) {
+			Otherbuild();
+		}
+
 	}
 
 	public int getX() {
