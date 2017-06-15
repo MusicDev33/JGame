@@ -16,6 +16,7 @@ public class JGame extends ApplicationAdapter {
 	Texture select;
 	Player player;
 	Camera cam;
+	Save save;
 
 	int startNum = 0;
 	float deltaTime;
@@ -29,9 +30,11 @@ public class JGame extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		batch.setProjectionMatrix(cam.camera.combined);
 		batch.enableBlending();
+		save = new Save();
 		world = new World(30, 30);
+		save.setSaveSeed(world.getSeed());
 		player = new Player(1, 1, world);
-		eHandler = new EventHandler(world, cam, player);
+		eHandler = new EventHandler(world, cam, player, save);
 		empty = new Texture("blank.png");
 		select = new Texture("selecttile.png");
 
@@ -101,7 +104,7 @@ public class JGame extends ApplicationAdapter {
 		cam = new Camera(width, height);
 		cam.camera.update();
 		batch.setProjectionMatrix(cam.camera.combined);
-		eHandler = new EventHandler(world, cam, player);
+		eHandler = new EventHandler(world, cam, player, save);
 	}
 
 	@Override

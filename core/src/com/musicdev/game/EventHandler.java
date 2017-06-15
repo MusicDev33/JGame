@@ -1,5 +1,7 @@
 package com.musicdev.game;
 
+import java.io.IOException;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
@@ -12,13 +14,15 @@ public class EventHandler {
 	World world;
 	Camera cam;
 	Player player;
+	Save save;
 	int[] xy = new int[2];
 	int tileOrder = 1;
 
-	public EventHandler(World world, Camera camera, Player player) {
+	public EventHandler(World world, Camera camera, Player player, Save save) {
 		this.world = world;
 		this.cam = camera;
 		this.player = player;
+		this.save = save;
 	}
 
 	public void update(float deltaTime) {
@@ -52,6 +56,15 @@ public class EventHandler {
 
 		else if (Gdx.input.isKeyPressed(Keys.SPACE)) {
 			world.GetTileAt(player.getX(), player.getY()).SetType(Tile.TileType.Dirt);
+		}
+
+		else if (Gdx.input.isKeyJustPressed(Keys.P)) {
+			try {
+				this.save.SaveMap();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 		else if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
