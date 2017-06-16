@@ -15,18 +15,18 @@ public class Save {
 	int seed = 0;
 	String c;
 
-	public Save() {
-
-	}
-
-	public void SaveMap() throws IOException {
+	public Save() throws IOException {
 		System.out.println(System.getProperty("user.dir"));
 		boolean files = (new File(System.getProperty("user.dir") + "/saves")).mkdirs();
 		boolean textFile = (new File(System.getProperty("user.dir") + "/saves/save.txt")).createNewFile();
-		Writer writer = new FileWriter(System.getProperty("user.dir") + "/saves/save.txt");
+
 		if (files && textFile) {
-			System.out.println("Created directory");
+			System.out.println("Created save directory.");
 		}
+	}
+
+	public void SaveMap() throws IOException {
+		Writer writer = new FileWriter(System.getProperty("user.dir") + "/saves/save.txt");
 
 		try {
 			writer.write(Integer.toString(this.seed));

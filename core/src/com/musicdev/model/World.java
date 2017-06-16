@@ -37,7 +37,7 @@ public class World {
 				LoadMap(TryLoad());
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 
@@ -137,8 +137,10 @@ public class World {
 		String line = br.readLine();
 
 		if (line == null) {
+			br.close();
 			return 0;
 		} else {
+			br.close();
 			return Integer.parseInt(line);
 		}
 	}

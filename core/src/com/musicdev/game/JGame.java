@@ -1,5 +1,7 @@
 package com.musicdev.game;
 
+import java.io.IOException;
+
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -30,7 +32,12 @@ public class JGame extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		batch.setProjectionMatrix(cam.camera.combined);
 		batch.enableBlending();
-		save = new Save();
+		try {
+			save = new Save();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		world = new World(30, 30);
 		save.setSaveSeed(world.getSeed());
 		player = new Player(1, 1, world);
