@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 public class Tile {
 	Texture img;
 	Texture installImg;
+	int TileID;
 
 	String name = "Tile";
 
@@ -75,6 +76,14 @@ public class Tile {
 		this.installImg = new Texture(this.object.toString().toLowerCase() + ".png");
 		this.installing = false;
 
+	}
+
+	public void SetID(int id) {
+		this.TileID = id;
+	}
+
+	public int GetID() {
+		return this.TileID;
 	}
 
 }

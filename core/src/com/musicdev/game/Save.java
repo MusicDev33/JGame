@@ -53,6 +53,17 @@ public class Save {
 
 	}
 
+	public void SaveMapToText() throws IOException {
+		Writer writer = new FileWriter(System.getProperty("user.dir") + "/saves/save.txt");
+		for (int x = 0; x < this.world.Width(); x++) {
+			for (int y = 0; y < this.world.Height(); y++) {
+				writer.write(Integer.toString(this.world.GetTileAt(x, y).GetID()));
+			}
+		}
+		writer.close();
+
+	}
+
 	public void setSaveSeed(int seed) {
 		this.seed = seed;
 	}

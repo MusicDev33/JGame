@@ -40,6 +40,7 @@ public class JGame extends ApplicationAdapter {
 		}
 		world = new World(30, 30);
 		save.setSaveSeed(world.getSeed());
+		save.setWorld(world);
 		player = new Player(1, 1, world);
 		eHandler = new EventHandler(world, cam, player, save);
 		empty = new Texture("blank.png");

@@ -60,7 +60,7 @@ public class EventHandler {
 
 		else if (Gdx.input.isKeyJustPressed(Keys.P)) {
 			try {
-				this.save.SaveMap();
+				this.save.SaveMapToText();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

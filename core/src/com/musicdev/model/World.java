@@ -7,6 +7,7 @@ import java.util.Random;
 
 import com.musicdev.game.Save;
 import com.musicdev.mapgen.SimplexNoise;
+import com.musicdev.model.Tile.TileType;
 
 public class World {
 	Save save;
@@ -29,12 +30,14 @@ public class World {
 
 		tiles = new Tile[wid][hei];
 
-		System.out.println("Map created with " + wid * hei + " tiles.");
 		try {
 			if (TryLoad() == 0) {
+				System.out.println("Map created with " + wid * hei + " tiles.");
 				CreateMap();
 			} else {
-				LoadMap(TryLoad());
+				System.out.println("Map loaded with " + wid * hei + " tiles.");
+				LoadMap2();
+				// CreateMap();
 			}
 		} catch (IOException e) {
 
@@ -53,20 +56,25 @@ public class World {
 		for (int x = 0; x < wid; x++) {
 			for (int y = 0; y < hei; y++) {
 				tiles[x][y] = new Tile(this, x, y);
+				tiles[x][y].SetName("Tile " + startNum);
+				startNum += 1;
 
 				int i = (int) (x * wid);
 				int j = (int) (y * hei);
 				result[x][y] = 0.5 * (1 + simplex.getNoise(i, j));
 				if (result[x][y] <= .48) {
 					tiles[x][y].SetType(Tile.TileType.Water);
+					tiles[x][y].SetID(0);
 				}
 
 				else if (result[x][y] > .48 && result[x][y] <= .51) {
 					tiles[x][y].SetType(Tile.TileType.Dirt);
+					tiles[x][y].SetID(1);
 				}
 
 				else if (result[x][y] > .51) {
 					tiles[x][y].SetType(Tile.TileType.Grass);
+					tiles[x][y].SetID(2);
 				}
 			}
 		}
@@ -132,6 +140,47 @@ public class World {
 
 	}
 
+	public void LoadMap2() throws IOException {
+		BufferedReader br = new BufferedReader(new FileReader(System.getProperty("user.dir") + "/saves/save.txt"));
+		String line = br.readLine();
+		int charNum = 0;
+
+		for (int x = 0; x < this.wid; x++) {
+			for (int y = 0; y < this.hei; y++) {
+				tiles[x][y] = new Tile(this, x, y);
+				tiles[x][y].SetName("Tile " + startNum);
+				startNum += 1;
+				int n = Character.getNumericValue(line.charAt(charNum));
+
+				switch (n) {
+				case 0:
+
+					tiles[x][y].SetType(TileType.Water);
+					System.out.println(tiles[x][y].GetType());
+					tiles[x][y].SetID(0);
+					break;
+				case 1:
+
+					tiles[x][y].SetType(TileType.Dirt);
+					System.out.println(tiles[x][y].GetType());
+					tiles[x][y].SetID(1);
+					break;
+				case 2:
+					tiles[x][y].SetType(TileType.Grass);
+					System.out.println(tiles[x][y].GetType());
+					tiles[x][y].SetID(2);
+					break;
+
+				}
+
+				charNum += 1;
+			}
+		}
+
+		br.close();
+
+	}
+
 	public int TryLoad() throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader(System.getProperty("user.dir") + "/saves/save.txt"));
 		String line = br.readLine();
@@ -141,7 +190,7 @@ public class World {
 			return 0;
 		} else {
 			br.close();
-			return Integer.parseInt(line);
+			return 1;
 		}
 	}
 
