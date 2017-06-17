@@ -171,6 +171,12 @@ public class World {
 					tiles[x][y].SetID(2);
 					break;
 
+				default:
+					tiles[x][y].SetType(TileType.Grass);
+					System.out.println(tiles[x][y].GetType());
+					tiles[x][y].SetID(2);
+					break;
+
 				}
 
 				charNum += 1;
