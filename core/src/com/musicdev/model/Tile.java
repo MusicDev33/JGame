@@ -49,6 +49,7 @@ public class Tile {
 	public void SetType(TileType type) {
 		this.type = type;
 		this.img = new Texture(this.type.toString().toLowerCase() + ".png");
+		this.TileID = TileType.valueOf(this.type.toString()).ordinal();
 	}
 
 	public String GetType() {
@@ -76,10 +77,6 @@ public class Tile {
 		this.installImg = new Texture(this.object.toString().toLowerCase() + ".png");
 		this.installing = false;
 
-	}
-
-	public void SetID(int id) {
-		this.TileID = id;
 	}
 
 	public int GetID() {

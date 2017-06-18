@@ -64,52 +64,21 @@ public class World {
 				result[x][y] = 0.5 * (1 + simplex.getNoise(i, j));
 				if (result[x][y] <= .48) {
 					tiles[x][y].SetType(Tile.TileType.Water);
-					tiles[x][y].SetID(0);
+
 				}
 
 				else if (result[x][y] > .48 && result[x][y] <= .51) {
 					tiles[x][y].SetType(Tile.TileType.Dirt);
-					tiles[x][y].SetID(1);
+
 				}
 
 				else if (result[x][y] > .51) {
 					tiles[x][y].SetType(Tile.TileType.Grass);
-					tiles[x][y].SetID(2);
+
 				}
 			}
 		}
 
-	}
-
-	public void CreateMap2() {
-		for (int x = 0; x < wid; x++) {
-			for (int y = 0; y < hei; y++) {
-				tiles[x][y] = new Tile(this, x, y);
-				tiles[x][y].SetName("Tile " + startNum);
-				startNum += 1;
-
-				n = rand.nextInt(4);
-
-				switch (n) {
-				case 0:
-					tiles[x][y].SetType(Tile.TileType.Dirt);
-					break;
-				case 1:
-					tiles[x][y].SetType(Tile.TileType.Stone);
-					break;
-				case 2:
-					tiles[x][y].SetType(Tile.TileType.Grass);
-					break;
-				case 3:
-					tiles[x][y].SetType(Tile.TileType.Water);
-					break;
-				default:
-					tiles[x][y].SetType(Tile.TileType.Dirt);
-					break;
-				}
-
-			}
-		}
 	}
 
 	public void LoadMap(int seed) {
@@ -152,7 +121,7 @@ public class World {
 				startNum += 1;
 				int n = Character.getNumericValue(line.charAt(charNum));
 
-				tiles[x][y].SetType(TileType.values()[n + 1]);
+				tiles[x][y].SetType(TileType.values()[n]);
 
 				charNum += 1;
 			}
