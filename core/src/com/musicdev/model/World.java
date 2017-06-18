@@ -152,32 +152,7 @@ public class World {
 				startNum += 1;
 				int n = Character.getNumericValue(line.charAt(charNum));
 
-				switch (n) {
-				case 0:
-
-					tiles[x][y].SetType(TileType.Water);
-					System.out.println(tiles[x][y].GetType());
-					tiles[x][y].SetID(0);
-					break;
-				case 1:
-
-					tiles[x][y].SetType(TileType.Dirt);
-					System.out.println(tiles[x][y].GetType());
-					tiles[x][y].SetID(1);
-					break;
-				case 2:
-					tiles[x][y].SetType(TileType.Grass);
-					System.out.println(tiles[x][y].GetType());
-					tiles[x][y].SetID(2);
-					break;
-
-				default:
-					tiles[x][y].SetType(TileType.Grass);
-					System.out.println(tiles[x][y].GetType());
-					tiles[x][y].SetID(2);
-					break;
-
-				}
+				tiles[x][y].SetType(TileType.values()[n + 1]);
 
 				charNum += 1;
 			}

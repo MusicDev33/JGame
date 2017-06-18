@@ -10,7 +10,7 @@ public class Tile {
 	String name = "Tile";
 
 	public enum TileType {
-		None, Dirt, Grass, Stone, Water
+		None, Water, Dirt, Grass, Stone
 	}
 
 	public enum Installed {
