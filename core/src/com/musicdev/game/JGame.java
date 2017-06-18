@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.musicdev.model.Player;
+import com.musicdev.model.Tile.Installed;
 import com.musicdev.model.World;
 
 public class JGame extends ApplicationAdapter {
@@ -69,7 +70,7 @@ public class JGame extends ApplicationAdapter {
 
 				if (x < world.Width() && y < world.Height() && x >= 0 && y >= 0) {
 
-					if (world.GetTileAt(x, y).hasObject == true) {
+					if (world.GetTileAt(x, y).hasObject == true && world.GetTileAt(x, y).object != Installed.None) {
 						batch.draw(world.GetTileAt(x, y).GetInstalledImg(), (x * 64) - cam.correctionX,
 								(y * 64) - cam.correctionY);
 					}

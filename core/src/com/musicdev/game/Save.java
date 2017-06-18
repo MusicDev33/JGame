@@ -19,8 +19,9 @@ public class Save {
 		System.out.println(System.getProperty("user.dir"));
 		boolean files = (new File(System.getProperty("user.dir") + "/saves")).mkdirs();
 		boolean textFile = (new File(System.getProperty("user.dir") + "/saves/save.txt")).createNewFile();
+		boolean installFile = (new File(System.getProperty("user.dir") + "/saves/saveInstall.txt")).createNewFile();
 
-		if (files && textFile) {
+		if (files && textFile && installFile) {
 			System.out.println("Created save directory.");
 		}
 	}
@@ -60,6 +61,15 @@ public class Save {
 				writer.write(Integer.toString(this.world.GetTileAt(x, y).GetID()));
 			}
 		}
+		writer.close();
+
+		writer = new FileWriter(System.getProperty("user.dir") + "/saves/saveInstall.txt");
+		for (int x = 0; x < this.world.Width(); x++) {
+			for (int y = 0; y < this.world.Height(); y++) {
+				writer.write(Integer.toString(this.world.GetTileAt(x, y).GetInstallID()));
+			}
+		}
+
 		writer.close();
 
 	}

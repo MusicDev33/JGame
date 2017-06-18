@@ -6,6 +6,7 @@ public class Tile {
 	Texture img;
 	Texture installImg;
 	int TileID;
+	int InstallID;
 
 	String name = "Tile";
 
@@ -21,7 +22,7 @@ public class Tile {
 	public boolean installing = false;
 
 	TileType type = TileType.None;
-	Installed object = Installed.None;
+	public Installed object = Installed.None;
 	Installed nextObject = Installed.None;
 
 	LockedObject lockedObject;
@@ -65,6 +66,7 @@ public class Tile {
 	}
 
 	public void PreInstall(Installed object) {
+		this.object = null;
 		this.hasObject = true;
 		this.installing = true;
 		this.nextObject = object;
@@ -72,15 +74,30 @@ public class Tile {
 
 	}
 
-	public void Install() {
-		this.object = this.nextObject;
+	public void Install(Installed object) {
+		this.object = object;
 		this.installImg = new Texture(this.object.toString().toLowerCase() + ".png");
+		this.InstallID = Installed.valueOf(this.object.toString()).ordinal();
 		this.installing = false;
 
 	}
 
+	public void EmptyTile() {
+		this.object = Installed.None;
+		this.InstallID = Installed.valueOf(this.object.toString()).ordinal();
+		this.installing = false;
+	}
+
 	public int GetID() {
 		return this.TileID;
+	}
+
+	public int GetInstallID() {
+		return this.InstallID;
+	}
+
+	public String GetObject() {
+		return this.object.toString();
 	}
 
 }

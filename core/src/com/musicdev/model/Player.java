@@ -62,7 +62,7 @@ public class Player {
 	}
 
 	public void Build(int x, int y) {
-		world.GetTileAt(x, y).Install();
+		world.GetTileAt(x, y).Install(world.GetTileAt(x, y).nextObject);
 		nextTileDistance = 0;
 	}
 

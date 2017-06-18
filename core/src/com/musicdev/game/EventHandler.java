@@ -69,6 +69,7 @@ public class EventHandler {
 
 		else if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
 			try {
+				System.out.println("Clicked");
 				tileHover(handleMouseX(deltaTime), handleMouseY(deltaTime)).PreInstall(Tile.Installed.Doormat);
 				// player.PreBuild(handleMouseX(deltaTime),
 				// handleMouseY(deltaTime));

@@ -7,6 +7,7 @@ import java.util.Random;
 
 import com.musicdev.game.Save;
 import com.musicdev.mapgen.SimplexNoise;
+import com.musicdev.model.Tile.Installed;
 import com.musicdev.model.Tile.TileType;
 
 public class World {
@@ -34,6 +35,7 @@ public class World {
 			if (TryLoad() == 0) {
 				System.out.println("Map created with " + wid * hei + " tiles.");
 				CreateMap();
+				System.out.println("Seed used: " + this.seed);
 			} else {
 				System.out.println("Map loaded with " + wid * hei + " tiles.");
 				LoadMap2();
@@ -44,13 +46,11 @@ public class World {
 			e.printStackTrace();
 		}
 
-		System.out.println("Seed used: " + this.seed);
-
 	}
 
 	public void CreateMap() {
 		double[][] result = new double[wid][hei];
-		this.seed = rand.nextInt(9999);
+		this.seed = rand.nextInt(99999999);
 
 		simplex = new SimplexNoise(1000, 0.1, this.seed);
 		for (int x = 0; x < wid; x++) {
@@ -58,6 +58,7 @@ public class World {
 				tiles[x][y] = new Tile(this, x, y);
 				tiles[x][y].SetName("Tile " + startNum);
 				startNum += 1;
+				tiles[x][y].EmptyTile();
 
 				int i = (int) (x * wid);
 				int j = (int) (y * hei);
@@ -128,6 +129,26 @@ public class World {
 		}
 
 		br.close();
+
+		br = new BufferedReader(new FileReader(System.getProperty("user.dir") + "/saves/saveInstall.txt"));
+		String newline = br.readLine();
+		charNum = 0;
+		for (int x = 0; x < this.wid; x++) {
+			for (int y = 0; y < this.hei; y++) {
+
+				int n = Character.getNumericValue(newline.charAt(charNum));
+				if (n == 0) {
+					tiles[x][y].EmptyTile();
+				} else {
+					System.out.println("Installed");
+					tiles[x][y].PreInstall(Installed.values()[n]);
+					tiles[x][y].Install(Installed.values()[n]);
+					System.out.println(tiles[x][y].GetObject());
+				}
+
+				charNum += 1;
+			}
+		}
 
 	}
 
