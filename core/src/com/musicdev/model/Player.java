@@ -84,7 +84,7 @@ public class Player {
 						nextTileDistance = tileDistance;
 						nextTile = world.GetTileAt(x, y);
 						PreBuild(nextTile.x, nextTile.y);
-						System.out.println("Searching");
+						System.out.println("Player is searching");
 					}
 
 				}

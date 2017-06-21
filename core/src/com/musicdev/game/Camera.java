@@ -4,10 +4,10 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 
 public class Camera {
 
-	OrthographicCamera camera = new OrthographicCamera();
+	public OrthographicCamera camera = new OrthographicCamera();
 
-	int correctionX = 0;
-	int correctionY = 0;
+	public int correctionX = 0;
+	public int correctionY = 0;
 
 	float screenX;
 	float screenY;

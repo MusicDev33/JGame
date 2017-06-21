@@ -3,13 +3,11 @@ package com.musicdev.game;
 import java.io.IOException;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.musicdev.model.Player;
-import com.musicdev.model.Tile.Installed;
 import com.musicdev.model.World;
+import com.musicdev.screens.MainMenu;
 
 public class JGame extends Game {
 	public SpriteBatch batch;
@@ -18,8 +16,8 @@ public class JGame extends Game {
 	Texture empty;
 	Texture select;
 	Player player;
-	Camera cam;
-	Save save;
+	public Camera cam;
+	public Save save;
 
 	int startNum = 0;
 	float deltaTime;
@@ -33,82 +31,20 @@ public class JGame extends Game {
 		cam = new Camera(screenX, screenY);
 		batch.setProjectionMatrix(cam.camera.combined);
 		batch.enableBlending();
-		// this.setScreen(new MainMenu(this));
-		createWorld();
-
-	}
-
-	public void createWorld() {
-
 		try {
 			save = new Save();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		world = new World(30, 30);
-		save.setSaveSeed(world.getSeed());
-		save.setWorld(world);
-		player = new Player(1, 1, world);
-		eHandler = new EventHandler(world, cam, player, save);
-		empty = new Texture("blank.png");
-		select = new Texture("selecttile.png");
+
+		this.setScreen(new MainMenu(this));
+
 	}
 
 	@Override
 	public void render() {
 		super.render();
-		Gdx.gl.glClearColor(0, 1, 1, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		deltaTime = Gdx.graphics.getDeltaTime();
-		update(deltaTime);
-		entityupdate(deltaTime);
-		batch.begin();
-		for (int x = -3 + cam.correctionX / 64; x < world.Width() - (world.Width() - (screenX / 64))
-				+ (cam.correctionX / 64) + 1; x++) {
-			for (int y = -3 + cam.correctionY / 64; y < world.Height() - (world.Height() - (screenY / 64))
-					+ (cam.correctionY / 64) + 1; y++) {
-
-				if (x >= world.Width() || y >= world.Height() || x < 0 || y < 0) {
-					batch.draw(empty, (x * 64) - cam.correctionX, (y * 64) - cam.correctionY);
-				} else {
-					batch.draw(world.GetTileAt(x, y).GetImg(), (x * 64) - cam.correctionX, (y * 64) - cam.correctionY);
-				}
-
-				if (x < world.Width() && y < world.Height() && x >= 0 && y >= 0) {
-
-					if (world.GetTileAt(x, y).hasObject == true && world.GetTileAt(x, y).object != Installed.None) {
-						batch.draw(world.GetTileAt(x, y).GetInstalledImg(), (x * 64) - cam.correctionX,
-								(y * 64) - cam.correctionY);
-					}
-				}
-
-			}
-		}
-		if (eHandler.handleMouseX(deltaTime) < world.Width() && eHandler.handleMouseY(deltaTime) < world.Height()
-				&& (eHandler.rawMouse(deltaTime)[0]) > 0 && (eHandler.rawMouse(deltaTime)[1]) > 0) {
-			batch.draw(select, (eHandler.handleMouseX(deltaTime) * 64) - cam.correctionX,
-					(eHandler.handleMouseY(deltaTime) * 64) - cam.correctionY);
-			Gdx.graphics.setTitle("JGame " + Integer.toString(Gdx.graphics.getFramesPerSecond()) + " FPS "
-					+ eHandler.tileHover(eHandler.handleMouseX(deltaTime), eHandler.handleMouseY(deltaTime)).GetType()
-					+ " " + player.buildPercentage + "%");
-		} else {
-			Gdx.graphics.setTitle("JGame " + Integer.toString(Gdx.graphics.getFramesPerSecond()) + " FPS "
-					+ "No Tile Selected" + " " + player.buildPercentage + "%");
-		}
-
-		batch.draw(player.getImg(), (player.getX() * 64) - cam.correctionX, (player.getY() * 64) - cam.correctionY);
-		batch.end();
-
-	}
-
-	public void update(float deltaTime) {
-		eHandler.update(deltaTime);
-
-	}
-
-	public void entityupdate(float deltaTime) {
-		player.update(deltaTime, world);
 	}
 
 	@Override
@@ -127,5 +63,13 @@ public class JGame extends Game {
 	public void dispose() {
 		batch.dispose();
 
+	}
+
+	public static void setScreenX(int n) {
+		screenX = n;
+	}
+
+	public static void setScreenY(int n) {
+		screenY = n;
 	}
 }
