@@ -2,7 +2,7 @@ package com.musicdev.game;
 
 import java.io.IOException;
 
-import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -11,8 +11,8 @@ import com.musicdev.model.Player;
 import com.musicdev.model.Tile.Installed;
 import com.musicdev.model.World;
 
-public class JGame extends ApplicationAdapter {
-	SpriteBatch batch;
+public class JGame extends Game {
+	public SpriteBatch batch;
 	World world;
 	EventHandler eHandler;
 	Texture empty;
@@ -24,15 +24,22 @@ public class JGame extends ApplicationAdapter {
 	int startNum = 0;
 	float deltaTime;
 
-	int screenX = 1600;
-	int screenY = 900;
+	public static int screenX = 1600;
+	public static int screenY = 900;
 
 	@Override
 	public void create() {
-		cam = new Camera(screenX, screenY);
 		batch = new SpriteBatch();
+		cam = new Camera(screenX, screenY);
 		batch.setProjectionMatrix(cam.camera.combined);
 		batch.enableBlending();
+		// this.setScreen(new MainMenu(this));
+		createWorld();
+
+	}
+
+	public void createWorld() {
+
 		try {
 			save = new Save();
 		} catch (IOException e) {
@@ -46,11 +53,11 @@ public class JGame extends ApplicationAdapter {
 		eHandler = new EventHandler(world, cam, player, save);
 		empty = new Texture("blank.png");
 		select = new Texture("selecttile.png");
-
 	}
 
 	@Override
 	public void render() {
+		super.render();
 		Gdx.gl.glClearColor(0, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		deltaTime = Gdx.graphics.getDeltaTime();

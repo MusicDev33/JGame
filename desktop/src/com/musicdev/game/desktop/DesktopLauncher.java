@@ -7,8 +7,8 @@ import com.musicdev.game.JGame;
 public class DesktopLauncher {
 	public static void main(String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.height = 900;
-		config.width = 1600;
+		config.height = JGame.screenY;
+		config.width = JGame.screenX;
 		config.foregroundFPS = 59;
 		new LwjglApplication(new JGame(), config);
 
