@@ -25,13 +25,23 @@ public class GameScreen implements Screen {
 	Camera cam;
 	Save save;
 
+	int tileSize = 64;
+
+	int screenX;
+	int screenY;
+
 	float deltaTime;
 
 	public GameScreen(JGame game) {
 		this.game = game;
 		this.batch = game.batch;
-		this.cam = game.cam;
+		this.screenX = game.screenX;
+		this.screenY = game.screenY;
+		this.cam = new Camera(this.screenX, this.screenY);
+		this.batch.setProjectionMatrix(this.cam.camera.combined);
+		this.batch.enableBlending();
 		this.save = game.save;
+
 	}
 
 	public void createWorld() {
@@ -58,54 +68,57 @@ public class GameScreen implements Screen {
 		update(deltaTime);
 		entityUpdate(deltaTime);
 		batch.begin();
-		for (int x = -3 + cam.correctionX / 64; x < world.Width() - (world.Width() - (JGame.screenX / 64))
+		for (int x = -3 + cam.correctionX / tileSize; x < world.Width() - (world.Width() - (this.screenX / tileSize))
 				+ (cam.correctionX / 64) + 1; x++) {
-			for (int y = -3 + cam.correctionY / 64; y < world.Height() - (world.Height() - (JGame.screenY / 64))
-					+ (cam.correctionY / 64) + 1; y++) {
+			for (int y = -3 + cam.correctionY / tileSize; y < world.Height()
+					- (world.Height() - (this.screenY / tileSize)) + (cam.correctionY / tileSize) + 1; y++) {
 
 				if (x >= world.Width() || y >= world.Height() || x < 0 || y < 0) {
-					batch.draw(empty, (x * 64) - cam.correctionX, (y * 64) - cam.correctionY);
+					batch.draw(empty, (x * tileSize) - cam.correctionX, (y * tileSize) - cam.correctionY);
 				} else {
-					batch.draw(world.GetTileAt(x, y).GetImg(), (x * 64) - cam.correctionX, (y * 64) - cam.correctionY);
+					batch.draw(world.GetTileAt(x, y).GetImg(), (x * tileSize) - cam.correctionX,
+							(y * tileSize) - cam.correctionY);
 				}
 
 				if (x < world.Width() && y < world.Height() && x >= 0 && y >= 0) {
 
 					if (world.GetTileAt(x, y).hasObject == true && world.GetTileAt(x, y).object != Installed.None) {
-						batch.draw(world.GetTileAt(x, y).GetInstalledImg(), (x * 64) - cam.correctionX,
-								(y * 64) - cam.correctionY);
+						batch.draw(world.GetTileAt(x, y).GetInstalledImg(), (x * tileSize) - cam.correctionX,
+								(y * tileSize) - cam.correctionY);
 					}
 				}
-
 			}
 		}
+
 		if (eHandler.handleMouseX(deltaTime) < world.Width() && eHandler.handleMouseY(deltaTime) < world.Height()
 				&& (eHandler.rawMouse(deltaTime)[0]) > 0 && (eHandler.rawMouse(deltaTime)[1]) > 0) {
-			batch.draw(select, (eHandler.handleMouseX(deltaTime) * 64) - cam.correctionX,
-					(eHandler.handleMouseY(deltaTime) * 64) - cam.correctionY);
-			Gdx.graphics.setTitle("JGame " + Integer.toString(Gdx.graphics.getFramesPerSecond()) + " FPS "
-					+ eHandler.tileHover(eHandler.handleMouseX(deltaTime), eHandler.handleMouseY(deltaTime)).GetType()
-					+ " " + player.buildPercentage + "%");
+
+			batch.draw(select, (eHandler.handleMouseX(deltaTime) * tileSize) - cam.correctionX,
+					(eHandler.handleMouseY(deltaTime) * tileSize) - cam.correctionY);
+
+			updateTitle(true);
+
 		} else {
-			Gdx.graphics.setTitle("JGame " + Integer.toString(Gdx.graphics.getFramesPerSecond()) + " FPS "
-					+ "No Tile Selected" + " " + player.buildPercentage + "%");
+
+			updateTitle(false);
 		}
 
-		batch.draw(player.getImg(), (player.getX() * 64) - cam.correctionX, (player.getY() * 64) - cam.correctionY);
+		batch.draw(player.getImg(), (player.getX() * tileSize) - cam.correctionX,
+				(player.getY() * tileSize) - cam.correctionY);
 		batch.end();
 
 	}
 
 	@Override
 	public void resize(int width, int height) {
-		JGame.setScreenX(width);
-		JGame.setScreenY(height);
-		cam.camera.viewportHeight = height;
-		cam.camera.viewportWidth = width;
-		cam = new Camera(width, height);
-		cam.camera.update();
-		batch.setProjectionMatrix(cam.camera.combined);
-		eHandler = new EventHandler(world, cam, player, save);
+		this.screenX = width;
+		this.screenY = height;
+		this.cam.camera.viewportHeight = height;
+		this.cam.camera.viewportWidth = width;
+		this.cam = new Camera(width, height);
+		this.cam.camera.update();
+		this.batch.setProjectionMatrix(this.cam.camera.combined);
+		this.eHandler = new EventHandler(world, this.cam, player, save);
 
 	}
 
@@ -115,6 +128,24 @@ public class GameScreen implements Screen {
 
 	public void entityUpdate(float deltaTime) {
 		player.update(deltaTime, world);
+	}
+
+	public void updateTitle(boolean onMap) {
+		if (onMap) {
+			Gdx.graphics.setTitle("JGame " + Integer.toString(Gdx.graphics.getFramesPerSecond()) + " FPS "
+					+ eHandler.tileHover(eHandler.handleMouseX(deltaTime), eHandler.handleMouseY(deltaTime)).GetType()
+					+ " " + player.buildPercentage + "%");
+		} else {
+			Gdx.graphics.setTitle("JGame " + Integer.toString(Gdx.graphics.getFramesPerSecond()) + " FPS "
+					+ "No Tile Selected" + " " + player.buildPercentage + "%");
+		}
+
+	}
+
+	public void print(String stuff) {
+
+		System.out.println(stuff);
+
 	}
 
 	@Override

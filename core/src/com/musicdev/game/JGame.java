@@ -22,8 +22,8 @@ public class JGame extends Game {
 	int startNum = 0;
 	float deltaTime;
 
-	public static int screenX = 1600;
-	public static int screenY = 900;
+	public int screenX = 1600;
+	public int screenY = 900;
 
 	@Override
 	public void create() {
@@ -65,11 +65,4 @@ public class JGame extends Game {
 
 	}
 
-	public static void setScreenX(int n) {
-		screenX = n;
-	}
-
-	public static void setScreenY(int n) {
-		screenY = n;
-	}
 }

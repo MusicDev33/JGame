@@ -63,3 +63,6 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# Feature Tracking File
+features.txt
