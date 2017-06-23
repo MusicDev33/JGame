@@ -13,6 +13,7 @@ public class FontHandler {
 	public BitmapFont font24;
 	public BitmapFont font32;
 	public BitmapFont font64;
+	public BitmapFont font90;
 
 	public FontHandler() {
 
@@ -22,6 +23,8 @@ public class FontHandler {
 		font32 = generator.generateFont(parameter);
 		parameter.size = 64;
 		font64 = generator.generateFont(parameter);
+		parameter.size = 90;
+		font90 = generator.generateFont(parameter);
 
 		generator.dispose();
 
