@@ -9,6 +9,7 @@ import com.musicdev.game.Camera;
 import com.musicdev.game.EventHandler;
 import com.musicdev.game.JGame;
 import com.musicdev.game.Save;
+import com.musicdev.model.FontHandler;
 import com.musicdev.model.Player;
 import com.musicdev.model.Tile.Installed;
 import com.musicdev.model.World;
@@ -25,6 +26,8 @@ public class GameScreen implements Screen {
 	Camera cam;
 	Save save;
 
+	FontHandler fontHandler;
+
 	int tileSize = 64;
 
 	int screenX;
@@ -33,6 +36,9 @@ public class GameScreen implements Screen {
 	float deltaTime;
 
 	public GameScreen(JGame game) {
+
+		fontHandler = new FontHandler();
+
 		this.game = game;
 		this.batch = game.batch;
 		this.screenX = game.screenX;
@@ -45,6 +51,7 @@ public class GameScreen implements Screen {
 	}
 
 	public void createWorld() {
+
 		world = new World(50, 50);
 		save.setSaveSeed(world.getSeed());
 		save.setWorld(world);
@@ -56,6 +63,7 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void show() {
+
 		createWorld();
 
 	}
@@ -69,7 +77,7 @@ public class GameScreen implements Screen {
 		entityUpdate(deltaTime);
 		batch.begin();
 		for (int x = -3 + cam.correctionX / tileSize; x < world.Width() - (world.Width() - (this.screenX / tileSize))
-				+ (cam.correctionX / 64) + 1; x++) {
+				+ (cam.correctionX / tileSize) + 1; x++) {
 			for (int y = -3 + cam.correctionY / tileSize; y < world.Height()
 					- (world.Height() - (this.screenY / tileSize)) + (cam.correctionY / tileSize) + 1; y++) {
 
@@ -105,12 +113,14 @@ public class GameScreen implements Screen {
 
 		batch.draw(player.getImg(), (player.getX() * tileSize) - cam.correctionX,
 				(player.getY() * tileSize) - cam.correctionY);
+
 		batch.end();
 
 	}
 
 	@Override
 	public void resize(int width, int height) {
+
 		this.screenX = width;
 		this.screenY = height;
 		this.cam.camera.viewportHeight = height;
@@ -131,6 +141,7 @@ public class GameScreen implements Screen {
 	}
 
 	public void updateTitle(boolean onMap) {
+
 		if (onMap) {
 			Gdx.graphics.setTitle("JGame " + Integer.toString(Gdx.graphics.getFramesPerSecond()) + " FPS "
 					+ eHandler.tileHover(eHandler.handleMouseX(deltaTime), eHandler.handleMouseY(deltaTime)).GetType()
