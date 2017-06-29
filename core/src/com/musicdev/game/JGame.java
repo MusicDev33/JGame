@@ -24,8 +24,8 @@ public class JGame extends Game {
 	int startNum = 0;
 	float deltaTime;
 
-	public int screenX = 1600;
-	public int screenY = 900;
+	public int screenX = 1200;
+	public int screenY = 768;
 
 	@Override
 	public void create() {

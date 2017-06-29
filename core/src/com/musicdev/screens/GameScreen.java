@@ -52,7 +52,7 @@ public class GameScreen implements Screen {
 
 	public void createWorld() {
 
-		world = new World(50, 50, game.toLoadOrNotToLoad);
+		world = new World(100, 100, game.toLoadOrNotToLoad);
 		save.setSaveSeed(world.getSeed());
 		save.setWorld(world);
 		player = new Player(1, 1, world);
@@ -77,7 +77,7 @@ public class GameScreen implements Screen {
 		entityUpdate(deltaTime);
 		batch.begin();
 		for (int x = -3 + cam.correctionX / tileSize; x < world.Width() - (world.Width() - (this.screenX / tileSize))
-				+ (cam.correctionX / tileSize) + 1; x++) {
+				+ (cam.correctionX / tileSize) + 2; x++) {
 			for (int y = -3 + cam.correctionY / tileSize; y < world.Height()
 					- (world.Height() - (this.screenY / tileSize)) + (cam.correctionY / tileSize) + 1; y++) {
 

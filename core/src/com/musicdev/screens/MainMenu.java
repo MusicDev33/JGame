@@ -40,10 +40,16 @@ public class MainMenu implements Screen {
 	float heightExit;
 	int exitY;
 
-	GlyphLayout layoutCantLoad;
-	float widthCantLoad;
+	GlyphLayout layoutLoading;
+	float widthLoading;
 
-	boolean cantLoad = false;
+	GlyphLayout layoutCreatingMap;
+	float widthCreatingMap;
+
+	boolean loadingMap = false;
+	boolean creatingMap = false;
+	boolean settingMap = false;
+	boolean randomOtherBoolean = false;;
 
 	public MainMenu(JGame game) {
 		this.game = game;
@@ -67,8 +73,12 @@ public class MainMenu implements Screen {
 		widthExit = layoutExit.width;
 		heightExit = layoutExit.height;
 
-		layoutCantLoad = new GlyphLayout(fontHandler.font90, "That doesn't quite  work yet bro.");
-		widthCantLoad = layoutCantLoad.width;
+		layoutLoading = new GlyphLayout(fontHandler.font90, "Loading");
+		widthLoading = layoutLoading.width;
+
+		layoutCreatingMap = new GlyphLayout(fontHandler.font90, "Creating Map");
+		widthCreatingMap = layoutCreatingMap.width;
+
 	}
 
 	@Override
@@ -81,96 +91,101 @@ public class MainMenu implements Screen {
 		Gdx.gl.glClearColor(0, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-		if (Gdx.input.getX() < (game.screenX / 2) + widthPlay / 2
-				&& Gdx.input.getX() > (game.screenX / 2) - widthPlay / 2) {
-			if ((Math.round(game.screenY) - Gdx.input.getY()) < playY
-					&& (Math.round(game.screenY) - Gdx.input.getY()) > playY - heightPlay) {
-				shapes.begin(ShapeRenderer.ShapeType.Line);
-				shapes.setColor(Color.BLACK);
-				shapes.rect(((game.screenX / 2) - widthPlay / 2) - (widthPlay / 20), playY - heightPlay,
-						widthPlay + (widthPlay / 20), heightPlay + 10);
-				shapes.end();
-				System.out.println();
-				if (Gdx.input.isTouched()) {
-					game.toLoadOrNotToLoad = false;
-					game.setScreen(new GameScreen(game));
-				}
-			}
-		}
+		if (!loadingMap && !creatingMap) {
 
-		if (Gdx.input.getX() < (game.screenX / 2) + widthLoad / 2
-				&& Gdx.input.getX() > (game.screenX / 2) - widthLoad / 2) {
+			if (Gdx.input.getX() < (game.screenX / 2) + widthPlay / 2
+					&& Gdx.input.getX() > (game.screenX / 2) - widthPlay / 2) {
+				if ((Math.round(game.screenY) - Gdx.input.getY()) < playY
+						&& (Math.round(game.screenY) - Gdx.input.getY()) > playY - heightPlay) {
+					shapes.begin(ShapeRenderer.ShapeType.Line);
+					shapes.setColor(Color.BLACK);
+					shapes.rect(((game.screenX / 2) - widthPlay / 2) - (widthPlay / 20), playY - heightPlay,
+							widthPlay + (widthPlay / 20), heightPlay + 10);
+					shapes.end();
 
-			if ((Math.round(game.screenY) - Gdx.input.getY()) < loadY
-					&& (Math.round(game.screenY) - Gdx.input.getY()) > loadY - heightLoad) {
-
-				shapes.begin(ShapeRenderer.ShapeType.Line);
-
-				shapes.setColor(Color.BLACK);
-				shapes.rect(((game.screenX / 2) - widthLoad / 2) - (widthLoad / 20), loadY - heightLoad,
-						widthLoad + (widthLoad / 20), heightLoad + 10);
-
-				shapes.end();
-
-				if (Gdx.input.isTouched()) {
-
-					try {
-						if (World.StaticTryLoad() == 1) {
-
-							game.toLoadOrNotToLoad = true;
-							game.setScreen(new GameScreen(game));
-
-						} else {
-
-						}
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					if (Gdx.input.isTouched()) {
+						game.toLoadOrNotToLoad = false;
+						game.setScreen(new LoadingScreen(game));
 					}
 				}
 			}
-		}
 
-		if (Gdx.input.getX() < (game.screenX / 2) + widthExit / 2
-				&& Gdx.input.getX() > (game.screenX / 2) - widthExit / 2) {
+			if (Gdx.input.getX() < (game.screenX / 2) + widthLoad / 2
+					&& Gdx.input.getX() > (game.screenX / 2) - widthLoad / 2) {
 
-			if ((Math.round(game.screenY) - Gdx.input.getY()) < exitY
-					&& (Math.round(game.screenY) - Gdx.input.getY()) > exitY - heightExit) {
+				if ((Math.round(game.screenY) - Gdx.input.getY()) < loadY
+						&& (Math.round(game.screenY) - Gdx.input.getY()) > loadY - heightLoad) {
 
-				shapes.begin(ShapeRenderer.ShapeType.Line);
+					shapes.begin(ShapeRenderer.ShapeType.Line);
 
-				shapes.setColor(Color.BLACK);
-				shapes.rect(((game.screenX / 2) - widthExit / 2) - (widthExit / 20), exitY - heightExit,
-						widthExit + (widthExit / 20), heightExit + 10);
+					shapes.setColor(Color.BLACK);
+					shapes.rect(((game.screenX / 2) - widthLoad / 2) - (widthLoad / 20), loadY - heightLoad,
+							widthLoad + (widthLoad / 20), heightLoad + 10);
 
-				shapes.end();
+					shapes.end();
 
-				if (Gdx.input.isTouched()) {
-					Gdx.app.exit();
+					if (Gdx.input.isTouched()) {
+
+						try {
+							if (World.StaticTryLoad() == 1) {
+
+								game.toLoadOrNotToLoad = true;
+								loadingMap = true;
+								settingMap = true;
+								game.setScreen(new LoadingScreen(game));
+
+							} else {
+
+							}
+						} catch (IOException e) {
+
+							e.printStackTrace();
+						}
+					}
 				}
 			}
-		}
 
-		game.batch.begin();
-		fontHandler.font90.setColor(Color.RED);
-		fontHandler.font32.setColor(Color.RED);
-		fontHandler.font90.draw(game.batch, "PLAY", (game.screenX / 2) - widthPlay / 2, playY);
-		fontHandler.font90.draw(game.batch, "EXIT", (game.screenX / 2) - widthPlay / 2, exitY);
-		try {
-			if (World.StaticTryLoad() == 0) {
+			if (Gdx.input.getX() < (game.screenX / 2) + widthExit / 2
+					&& Gdx.input.getX() > (game.screenX / 2) - widthExit / 2) {
 
-				fontHandler.font90.setColor(Color.GRAY);
+				if ((Math.round(game.screenY) - Gdx.input.getY()) < exitY
+						&& (Math.round(game.screenY) - Gdx.input.getY()) > exitY - heightExit) {
 
-			} else {
+					shapes.begin(ShapeRenderer.ShapeType.Line);
 
+					shapes.setColor(Color.BLACK);
+					shapes.rect(((game.screenX / 2) - widthExit / 2) - (widthExit / 20), exitY - heightExit,
+							widthExit + (widthExit / 20), heightExit + 10);
+
+					shapes.end();
+
+					if (Gdx.input.isTouched()) {
+						Gdx.app.exit();
+					}
+				}
 			}
 
-		} catch (IOException e) {
+			game.batch.begin();
+			fontHandler.font90.setColor(Color.RED);
+			fontHandler.font32.setColor(Color.RED);
+			fontHandler.font90.draw(game.batch, "PLAY", (game.screenX / 2) - widthPlay / 2, playY);
+			fontHandler.font90.draw(game.batch, "EXIT", (game.screenX / 2) - widthPlay / 2, exitY);
+			try {
+				if (World.StaticTryLoad() == 0) {
 
+					fontHandler.font90.setColor(Color.GRAY);
+
+				} else {
+
+				}
+
+			} catch (IOException e) {
+
+			}
+			fontHandler.font90.draw(game.batch, "LOAD", (game.screenX / 2) - widthPlay / 2, loadY);
+
+			game.batch.end();
 		}
-		fontHandler.font90.draw(game.batch, "LOAD", (game.screenX / 2) - widthPlay / 2, loadY);
-
-		game.batch.end();
 
 	}
 

@@ -6,8 +6,8 @@ import com.musicdev.game.JGame;
 
 public class DesktopLauncher {
 
-	public static int screenX = 1600;
-	public static int screenY = 900;
+	public static int screenX = 1200;
+	public static int screenY = 768;
 
 	public static void main(String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
