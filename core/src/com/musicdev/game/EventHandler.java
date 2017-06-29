@@ -5,7 +5,7 @@ import java.io.IOException;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
-import com.musicdev.model.Player;
+import com.musicdev.model.Entity;
 import com.musicdev.model.Tile;
 import com.musicdev.model.World;
 
@@ -13,15 +13,15 @@ public class EventHandler {
 	float camMoveSpeed = 500;
 	World world;
 	Camera cam;
-	Player player;
+	Entity entity;
 	Save save;
 	int[] xy = new int[2];
 	int tileOrder = 1;
 
-	public EventHandler(World world, Camera camera, Player player, Save save) {
+	public EventHandler(World world, Camera camera, Entity entity, Save save) {
 		this.world = world;
 		this.cam = camera;
-		this.player = player;
+		this.entity = entity;
 		this.save = save;
 	}
 
@@ -55,7 +55,7 @@ public class EventHandler {
 			}
 
 		else if (Gdx.input.isKeyPressed(Keys.SPACE)) {
-			world.GetTileAt(player.getX(), player.getY()).SetType(Tile.TileType.Dirt);
+			world.GetTileAt(entity.getX(), entity.getY()).SetType(Tile.TileType.Dirt);
 		}
 
 		else if (Gdx.input.isKeyJustPressed(Keys.P)) {

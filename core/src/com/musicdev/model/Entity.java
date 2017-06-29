@@ -6,7 +6,7 @@ import java.util.Timer;
 import com.badlogic.gdx.graphics.Texture;
 import com.musicdev.model.Tile.TileType;
 
-public class Player {
+public class Entity {
 	int x;
 	int y;
 	int nx;
@@ -35,7 +35,7 @@ public class Player {
 
 	boolean installingTileExists = false;
 
-	public Player(int x, int y, World world) {
+	public Entity(int x, int y, World world) {
 		this.x = x;
 		this.y = y;
 		this.world = world;
@@ -90,7 +90,6 @@ public class Player {
 				}
 			}
 		}
-		// PreBuild(nextTile.x, nextTile.y);
 
 	}
 

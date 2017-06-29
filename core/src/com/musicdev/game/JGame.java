@@ -5,7 +5,7 @@ import java.io.IOException;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.musicdev.model.Player;
+import com.musicdev.model.Entity;
 import com.musicdev.model.World;
 import com.musicdev.screens.MainMenu;
 
@@ -15,7 +15,7 @@ public class JGame extends Game {
 	EventHandler eHandler;
 	Texture empty;
 	Texture select;
-	Player player;
+	Entity entity;
 	public Camera cam;
 	public Save save;
 
@@ -58,7 +58,7 @@ public class JGame extends Game {
 		cam = new Camera(width, height);
 		cam.camera.update();
 		batch.setProjectionMatrix(cam.camera.combined);
-		eHandler = new EventHandler(world, cam, player, save);
+		eHandler = new EventHandler(world, cam, entity, save);
 	}
 
 	@Override

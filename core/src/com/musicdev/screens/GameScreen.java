@@ -10,7 +10,7 @@ import com.musicdev.game.EventHandler;
 import com.musicdev.game.JGame;
 import com.musicdev.game.Save;
 import com.musicdev.model.FontHandler;
-import com.musicdev.model.Player;
+import com.musicdev.model.Entity;
 import com.musicdev.model.Tile.Installed;
 import com.musicdev.model.World;
 
@@ -22,7 +22,7 @@ public class GameScreen implements Screen {
 	EventHandler eHandler;
 	Texture empty;
 	Texture select;
-	Player player;
+	Entity entity;
 	Camera cam;
 	Save save;
 
@@ -55,8 +55,8 @@ public class GameScreen implements Screen {
 		world = new World(100, 100, game.toLoadOrNotToLoad);
 		save.setSaveSeed(world.getSeed());
 		save.setWorld(world);
-		player = new Player(1, 1, world);
-		eHandler = new EventHandler(world, cam, player, save);
+		entity = new Entity(1, 1, world);
+		eHandler = new EventHandler(world, cam, entity, save);
 		empty = new Texture("blank.png");
 		select = new Texture("selecttile.png");
 	}
@@ -111,8 +111,8 @@ public class GameScreen implements Screen {
 			updateTitle(false);
 		}
 
-		batch.draw(player.getImg(), (player.getX() * tileSize) - cam.correctionX,
-				(player.getY() * tileSize) - cam.correctionY);
+		batch.draw(entity.getImg(), (entity.getX() * tileSize) - cam.correctionX,
+				(entity.getY() * tileSize) - cam.correctionY);
 
 		batch.end();
 
@@ -128,7 +128,7 @@ public class GameScreen implements Screen {
 		this.cam = new Camera(width, height);
 		this.cam.camera.update();
 		this.batch.setProjectionMatrix(this.cam.camera.combined);
-		this.eHandler = new EventHandler(world, this.cam, player, save);
+		this.eHandler = new EventHandler(world, this.cam, entity, save);
 
 	}
 
@@ -137,7 +137,7 @@ public class GameScreen implements Screen {
 	}
 
 	public void entityUpdate(float deltaTime) {
-		player.update(deltaTime, world);
+		entity.update(deltaTime, world);
 	}
 
 	public void updateTitle(boolean onMap) {
@@ -145,10 +145,10 @@ public class GameScreen implements Screen {
 		if (onMap) {
 			Gdx.graphics.setTitle("JGame " + Integer.toString(Gdx.graphics.getFramesPerSecond()) + " FPS "
 					+ eHandler.tileHover(eHandler.handleMouseX(deltaTime), eHandler.handleMouseY(deltaTime)).GetType()
-					+ " " + player.buildPercentage + "%");
+					+ " " + entity.buildPercentage + "%");
 		} else {
 			Gdx.graphics.setTitle("JGame " + Integer.toString(Gdx.graphics.getFramesPerSecond()) + " FPS "
-					+ "No Tile Selected" + " " + player.buildPercentage + "%");
+					+ "No Tile Selected" + " " + entity.buildPercentage + "%");
 		}
 
 	}
