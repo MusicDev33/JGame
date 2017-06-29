@@ -52,7 +52,7 @@ public class World {
 		double[][] result = new double[wid][hei];
 		this.seed = rand.nextInt(99999999);
 
-		simplex = new SimplexNoise(1000, 0.1, this.seed);
+		simplex = new SimplexNoise(2500, 0.1, this.seed);
 		for (int x = 0; x < wid; x++) {
 			for (int y = 0; y < hei; y++) {
 				tiles[x][y] = new Tile(this, x, y);
