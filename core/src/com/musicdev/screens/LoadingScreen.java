@@ -20,13 +20,7 @@ public class LoadingScreen implements Screen {
 	GlyphLayout layoutLoading;
 	float widthLoading;
 
-	GlyphLayout layoutCreatingMap;
-	float widthCreatingMap;
-
-	boolean loadingMap = false;
-	boolean creatingMap = false;
 	boolean settingMap = true;
-	boolean randomOtherBoolean = false;
 
 	float randomDelta = 0;
 

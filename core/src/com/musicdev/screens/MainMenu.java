@@ -73,12 +73,6 @@ public class MainMenu implements Screen {
 		widthExit = layoutExit.width;
 		heightExit = layoutExit.height;
 
-		layoutLoading = new GlyphLayout(fontHandler.font90, "Loading");
-		widthLoading = layoutLoading.width;
-
-		layoutCreatingMap = new GlyphLayout(fontHandler.font90, "Creating Map");
-		widthCreatingMap = layoutCreatingMap.width;
-
 	}
 
 	@Override
