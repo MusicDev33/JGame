@@ -25,21 +25,21 @@ public class World {
 	int n;
 	int seed;
 
-	public World(int wid, int hei) {
+	public World(int wid, int hei, boolean load) {
 		this.wid = wid;
 		this.hei = hei;
 
 		tiles = new Tile[wid][hei];
 
 		try {
-			if (TryLoad() == 0) {
+			if (load) {
+				System.out.println("Map loaded with " + wid * hei + " tiles.");
+				LoadMap2();
+			} else {
 				System.out.println("Map created with " + wid * hei + " tiles.");
 				CreateMap();
 				System.out.println("Seed used: " + this.seed);
-			} else {
-				System.out.println("Map loaded with " + wid * hei + " tiles.");
-				LoadMap2();
-				// CreateMap();
+
 			}
 		} catch (IOException e) {
 
@@ -153,6 +153,19 @@ public class World {
 	}
 
 	public int TryLoad() throws IOException {
+		BufferedReader br = new BufferedReader(new FileReader(System.getProperty("user.dir") + "/saves/save.txt"));
+		String line = br.readLine();
+
+		if (line == null) {
+			br.close();
+			return 0;
+		} else {
+			br.close();
+			return 1;
+		}
+	}
+
+	public static int StaticTryLoad() throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader(System.getProperty("user.dir") + "/saves/save.txt"));
 		String line = br.readLine();
 

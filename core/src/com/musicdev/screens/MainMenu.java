@@ -1,5 +1,7 @@
 package com.musicdev.screens;
 
+import java.io.IOException;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -11,6 +13,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.musicdev.game.Camera;
 import com.musicdev.game.JGame;
 import com.musicdev.model.FontHandler;
+import com.musicdev.model.World;
 
 public class MainMenu implements Screen {
 	SpriteBatch batch;
@@ -89,6 +92,7 @@ public class MainMenu implements Screen {
 				shapes.end();
 				System.out.println();
 				if (Gdx.input.isTouched()) {
+					game.toLoadOrNotToLoad = false;
 					game.setScreen(new GameScreen(game));
 				}
 			}
@@ -109,7 +113,20 @@ public class MainMenu implements Screen {
 				shapes.end();
 
 				if (Gdx.input.isTouched()) {
-					cantLoad = true;
+
+					try {
+						if (World.StaticTryLoad() == 1) {
+
+							game.toLoadOrNotToLoad = true;
+							game.setScreen(new GameScreen(game));
+
+						} else {
+
+						}
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 		}
@@ -138,13 +155,20 @@ public class MainMenu implements Screen {
 		fontHandler.font90.setColor(Color.RED);
 		fontHandler.font32.setColor(Color.RED);
 		fontHandler.font90.draw(game.batch, "PLAY", (game.screenX / 2) - widthPlay / 2, playY);
-		fontHandler.font90.draw(game.batch, "LOAD", (game.screenX / 2) - widthPlay / 2, loadY);
 		fontHandler.font90.draw(game.batch, "EXIT", (game.screenX / 2) - widthPlay / 2, exitY);
+		try {
+			if (World.StaticTryLoad() == 0) {
 
-		if (cantLoad) {
-			fontHandler.font32.draw(game.batch, "That doesn't quite  work yet bro.",
-					(game.screenX / 2) - (widthCantLoad / 6), 200);
+				fontHandler.font90.setColor(Color.GRAY);
+
+			} else {
+
+			}
+
+		} catch (IOException e) {
+
 		}
+		fontHandler.font90.draw(game.batch, "LOAD", (game.screenX / 2) - widthPlay / 2, loadY);
 
 		game.batch.end();
 

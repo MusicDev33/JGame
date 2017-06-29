@@ -52,7 +52,7 @@ public class GameScreen implements Screen {
 
 	public void createWorld() {
 
-		world = new World(50, 50);
+		world = new World(50, 50, game.toLoadOrNotToLoad);
 		save.setSaveSeed(world.getSeed());
 		save.setWorld(world);
 		player = new Player(1, 1, world);

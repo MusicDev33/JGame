@@ -19,6 +19,8 @@ public class JGame extends Game {
 	public Camera cam;
 	public Save save;
 
+	public boolean toLoadOrNotToLoad;
+
 	int startNum = 0;
 	float deltaTime;
 
