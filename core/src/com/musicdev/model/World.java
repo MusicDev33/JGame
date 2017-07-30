@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Random;
 
+import com.musicdev.entities.Faction;
 import com.musicdev.game.Save;
 import com.musicdev.mapgen.SimplexNoise;
 import com.musicdev.model.Tile.Installed;
@@ -12,6 +13,7 @@ import com.musicdev.model.Tile.TileType;
 
 public class World {
 	Save save;
+	Faction faction;
 
 	Tile[][] tiles;
 	int wid;
@@ -48,7 +50,7 @@ public class World {
 
 	}
 
-	public void CreateMap() {
+	public void CreateMap() throws IOException {
 		double[][] result = new double[wid][hei];
 		this.seed = rand.nextInt(99999999);
 
@@ -79,6 +81,7 @@ public class World {
 				}
 			}
 		}
+		faction = new Faction();
 
 	}
 

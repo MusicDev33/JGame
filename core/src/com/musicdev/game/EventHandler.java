@@ -5,7 +5,7 @@ import java.io.IOException;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
-import com.musicdev.model.Entity;
+import com.musicdev.entities.Entity;
 import com.musicdev.model.Tile;
 import com.musicdev.model.World;
 

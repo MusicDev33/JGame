@@ -1,9 +1,11 @@
-package com.musicdev.model;
+package com.musicdev.entities;
 
 import java.util.Random;
 import java.util.Timer;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.musicdev.model.Tile;
+import com.musicdev.model.World;
 import com.musicdev.model.Tile.TileType;
 
 public class Entity {

@@ -5,12 +5,13 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.musicdev.entities.Entity;
 import com.musicdev.game.Camera;
 import com.musicdev.game.EventHandler;
 import com.musicdev.game.JGame;
 import com.musicdev.game.Save;
+import com.musicdev.mapgen.HistoryGen;
 import com.musicdev.model.FontHandler;
-import com.musicdev.model.Entity;
 import com.musicdev.model.Tile.Installed;
 import com.musicdev.model.World;
 
@@ -25,6 +26,8 @@ public class GameScreen implements Screen {
 	Entity entity;
 	Camera cam;
 	Save save;
+
+	HistoryGen voltaire; // Because Voltaire was a historian, yo.
 
 	FontHandler fontHandler;
 

@@ -5,7 +5,7 @@ import java.io.IOException;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.musicdev.model.Entity;
+import com.musicdev.entities.Entity;
 import com.musicdev.model.World;
 import com.musicdev.screens.MainMenu;
 
