@@ -52,25 +52,26 @@ public class World {
 
 	public void CreateMap() throws IOException {
 		double[][] result = new double[wid][hei];
-		this.seed = rand.nextInt(99999999);
+		this.seed = rand.nextInt(999999999);
 
-		simplex = new SimplexNoise(2500, 0.1, this.seed);
+		simplex = new SimplexNoise(2800, 0.18, this.seed);
 		for (int x = 0; x < wid; x++) {
 			for (int y = 0; y < hei; y++) {
 				tiles[x][y] = new Tile(this, x, y);
 				tiles[x][y].SetName("Tile " + startNum);
 				startNum += 1;
 				tiles[x][y].EmptyTile();
+				tiles[x][y].SetPathfind(false);
 
 				int i = (int) (x * wid);
 				int j = (int) (y * hei);
 				result[x][y] = 0.5 * (1 + simplex.getNoise(i, j));
-				if (result[x][y] <= .48) {
+				if (result[x][y] <= .47) {
 					tiles[x][y].SetType(Tile.TileType.Water);
 
 				}
 
-				else if (result[x][y] > .48 && result[x][y] <= .51) {
+				else if (result[x][y] > .47 && result[x][y] <= .51) {
 					tiles[x][y].SetType(Tile.TileType.Dirt);
 
 				}

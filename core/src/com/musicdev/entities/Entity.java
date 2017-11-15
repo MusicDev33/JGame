@@ -1,12 +1,14 @@
 package com.musicdev.entities;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Timer;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.musicdev.model.Tile;
-import com.musicdev.model.World;
 import com.musicdev.model.Tile.TileType;
+import com.musicdev.model.World;
+import com.musicdev.tools.Vector3;
 
 public class Entity {
 	int x;
@@ -34,6 +36,8 @@ public class Entity {
 	int tileDistance = 0;
 	int nextTileDistance = 0;
 	Tile nextTile;
+	ArrayList<Vector3> distList;
+	Vector3 tileSet;
 
 	boolean installingTileExists = false;
 
@@ -76,21 +80,38 @@ public class Entity {
 	}
 
 	public void Otherbuild() {
+		distList = new ArrayList();
+		System.out.println("    ");
 		for (int x = 0; x < world.Width(); x++) {
 			for (int y = 0; y < world.Height(); y++) {
 				if (world.GetTileAt(x, y).installing == true) {
-					double a = Math.abs(this.x - x);
-					double b = Math.abs(this.y - y);
+					double a = Math.abs(x - this.x);
+					double b = Math.abs(y - this.y);
 					tileDistance = (int) Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
-					if (tileDistance > nextTileDistance) {
-						nextTileDistance = tileDistance;
-						nextTile = world.GetTileAt(x, y);
-						PreBuild(nextTile.x, nextTile.y);
-						System.out.println("Player is searching");
-					}
+					tileSet = new Vector3(x, y, tileDistance);
+					distList.add(tileSet);
 
 				}
 			}
+		}
+
+		for (int s = 0; s <= distList.size() - 1; s++) {
+			for (int k = 0; k <= distList.size() - 2; k++) {
+				if (distList.get(k).getZ() > distList.get(k + 1).getZ()) {
+					Vector3 temp = new Vector3(0, 0, 0);
+					temp = distList.get(k);
+
+					distList.set(k, distList.get(k + 1));
+					distList.set((k + 1), temp);
+
+				}
+			}
+		}
+		for (int i = distList.size() - 1; i >= 0; i--) {
+			System.out.println(distList.get(i));
+			System.out.println(i);
+			nextTile = world.GetTileAt(distList.get(i).getX(), distList.get(i).getY());
+			PreBuild(nextTile.x, nextTile.y);
 		}
 
 	}

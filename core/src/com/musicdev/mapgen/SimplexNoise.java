@@ -9,9 +9,9 @@ public class SimplexNoise {
 
 	int largestFeature;
 	double persistence;
-	int seed;
+	long seed;
 
-	public SimplexNoise(int largestFeature, double persistence, int seed) {
+	public SimplexNoise(int largestFeature, double persistence, long seed) {
 		this.largestFeature = largestFeature;
 		this.persistence = persistence;
 		this.seed = seed;

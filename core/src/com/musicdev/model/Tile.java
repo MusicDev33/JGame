@@ -8,6 +8,8 @@ public class Tile {
 	int TileID;
 	int InstallID;
 
+	boolean pathFound;
+
 	String name = "Tile";
 
 	public enum TileType {
@@ -86,6 +88,10 @@ public class Tile {
 		this.object = Installed.None;
 		this.InstallID = Installed.valueOf(this.object.toString()).ordinal();
 		this.installing = false;
+	}
+
+	public void SetPathfind(boolean found) {
+		this.pathFound = found;
 	}
 
 	public int GetID() {

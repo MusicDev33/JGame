@@ -31,13 +31,47 @@ public class Faction {
 	Random rand = new Random();
 
 	public Faction() throws IOException {
-		for (int i = 0; i < 300; i++) {
-			this.GenerateName();
-		}
+		this.name = this.GenerateName(20);
 
 	}
 
-	public String GenerateName() throws IOException {
+	public String GenerateName(int amount) throws IOException {
+
+		AdjectiveGen();
+		NounGen();
+		GroupGen();
+
+		// Two of the randIndexes below don't have the -1 because it allows for
+		// a noun or adjective to not exist, giving a smaller name. This
+		// hopefully encourages a little more variety in the name as opposed to
+		// strict 3 word faction names.
+
+		randIndex1 = rand.nextInt(adj.size());
+		randIndex2 = rand.nextInt(noun.size());
+		randIndex3 = rand.nextInt(faction.size() - 1);
+
+		if (adj.get(randIndex1) != null) {
+			str1 = (StringTools.toTitleCase(adj.get(randIndex1)));
+		} else {
+			str1 = adj.get(randIndex1);
+		}
+
+		if (noun.get(randIndex2) != null) {
+			str2 = (StringTools.toTitleCase(noun.get(randIndex2)));
+		} else {
+			str2 = noun.get(randIndex2);
+
+		}
+
+		str3 = (StringTools.toTitleCase(faction.get(randIndex3)));
+		String factionNameUntrimmed = "The " + str1 + str2 + str3;
+		String factionName = factionNameUntrimmed.trim().replaceAll(" +", " ");
+
+		System.out.println(factionName);
+		return factionName;
+	}
+
+	public ArrayList<String> AdjectiveGen() throws IOException {
 		// The adjective
 		fs = new FileInputStream(System.getProperty("user.dir") + "/WordBank/adjectives.txt");
 		br = new BufferedReader(new InputStreamReader(fs));
@@ -57,7 +91,11 @@ public class Faction {
 			}
 
 		}
+		return adj;
 
+	}
+
+	public ArrayList<String> NounGen() throws IOException {
 		// The noun
 		fs = new FileInputStream(System.getProperty("user.dir") + "/WordBank/nouns.txt");
 		br = new BufferedReader(new InputStreamReader(fs));
@@ -77,7 +115,10 @@ public class Faction {
 			}
 
 		}
+		return adj;
+	}
 
+	public ArrayList<String> GroupGen() throws IOException {
 		// The faction name
 		fs = new FileInputStream(System.getProperty("user.dir") + "/WordBank/factions.txt");
 		br = new BufferedReader(new InputStreamReader(fs));
@@ -86,31 +127,8 @@ public class Faction {
 			faction.add(br.readLine());
 
 		}
+		return adj;
 
-		randIndex1 = rand.nextInt(adj.size());
-		randIndex2 = rand.nextInt(noun.size()); // There's a space at the end,
-												// allowing for no noun to be
-												// chosen.
-		randIndex3 = rand.nextInt(faction.size() - 1);
-		if (adj.get(randIndex1) != null) {
-			str1 = (StringTools.toTitleCase(adj.get(randIndex1)));
-		} else {
-			str1 = adj.get(randIndex1);
-		}
-
-		if (noun.get(randIndex2) != null) {
-			str2 = (StringTools.toTitleCase(noun.get(randIndex2)));
-		} else {
-			str2 = noun.get(randIndex2);
-
-		}
-
-		str3 = (StringTools.toTitleCase(faction.get(randIndex3)));
-		String factionNameUntrimmed = "The " + str1 + str2 + str3;
-		String factionName = factionNameUntrimmed.trim().replaceAll(" +", " ");
-
-		System.out.println(factionName);
-		return "name";
 	}
 
 }
