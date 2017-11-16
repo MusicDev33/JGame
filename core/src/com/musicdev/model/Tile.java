@@ -78,12 +78,6 @@ public class Tile {
 		// way it does, but I can't change it to
 		// Installed.None...
 
-		// this.object = null;
-		if (this.hasObject == false) {
-			this.hasObject = false;
-			// lol
-		}
-
 		this.installing = true;
 		this.nextObject = object;
 		this.preinstall = true;
