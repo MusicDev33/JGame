@@ -18,7 +18,7 @@ public class Tile {
 	}
 
 	public enum Installed {
-		None, Wall1, Doormat, Installing, WoodTile
+		None, Wall1, Doormat, WoodTile
 	}
 
 	public boolean hasObject = false;

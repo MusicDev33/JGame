@@ -18,11 +18,16 @@ public class EventHandler {
 	int[] xy = new int[2];
 	int tileOrder = 1;
 
+	int accessNum = 0;
+
+	Tile.Installed currentTile;
+
 	public EventHandler(World world, Camera camera, Entity entity, Save save) {
 		this.world = world;
 		this.cam = camera;
 		this.entity = entity;
 		this.save = save;
+		this.currentTile = Tile.Installed.WoodTile;
 	}
 
 	public void update(float deltaTime) {
@@ -54,6 +59,17 @@ public class EventHandler {
 
 			}
 
+		// Change Tiles
+		else if (Gdx.input.isKeyJustPressed(Keys.C)) {
+			accessNum += 1;
+			if (accessNum > Tile.Installed.values().length - 1) {
+				accessNum = 1;
+			}
+			currentTile = Tile.Installed.values()[accessNum];
+			System.out.println(currentTile.name());
+			System.out.println(accessNum);
+		}
+
 		else if (Gdx.input.isKeyPressed(Keys.SPACE)) {
 			world.GetTileAt(entity.getX(), entity.getY()).SetType(Tile.TileType.Dirt);
 		}
@@ -70,7 +86,7 @@ public class EventHandler {
 		else if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
 			try {
 				// System.out.println("Clicked");
-				tileHover(handleMouseX(deltaTime), handleMouseY(deltaTime)).PreInstall(Tile.Installed.WoodTile);
+				tileHover(handleMouseX(deltaTime), handleMouseY(deltaTime)).PreInstall(currentTile);
 				// player.PreBuild(handleMouseX(deltaTime),
 				// handleMouseY(deltaTime));
 
