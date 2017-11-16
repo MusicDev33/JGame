@@ -2,6 +2,7 @@ package com.musicdev.mapgen;
 
 import java.util.Random;
 
+//You've probably seen this code somewhere....that's my shameless disclaimer
 public class SimplexNoise {
 	SimplexOctaves[] octaves;
 	double[] frequencys;

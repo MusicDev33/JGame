@@ -80,8 +80,7 @@ public class Entity {
 	}
 
 	public void Otherbuild() {
-		distList = new ArrayList();
-		System.out.println("    ");
+		distList = new ArrayList<Vector3>();
 		for (int x = 0; x < world.Width(); x++) {
 			for (int y = 0; y < world.Height(); y++) {
 				if (world.GetTileAt(x, y).installing == true) {
@@ -108,8 +107,8 @@ public class Entity {
 			}
 		}
 		for (int i = distList.size() - 1; i >= 0; i--) {
-			System.out.println(distList.get(i));
-			System.out.println(i);
+			// System.out.println(distList.get(i));
+			// System.out.println(i);
 			nextTile = world.GetTileAt(distList.get(i).getX(), distList.get(i).getY());
 			PreBuild(nextTile.x, nextTile.y);
 		}

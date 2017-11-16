@@ -97,9 +97,15 @@ public class GameScreen implements Screen {
 						batch.draw(world.GetTileAt(x, y).GetInstalledImg(), (x * tileSize) - cam.correctionX,
 								(y * tileSize) - cam.correctionY);
 					}
+
+					if (world.GetTileAt(x, y).preinstall == true) {
+						batch.draw(world.GetTileAt(x, y).GetPreinstallImg(), (x * tileSize) - cam.correctionX,
+								(y * tileSize) - cam.correctionY);
+					}
 				}
 			}
 		}
+		// Tile Data for screen title
 
 		if (eHandler.handleMouseX(deltaTime) < world.Width() && eHandler.handleMouseY(deltaTime) < world.Height()
 				&& (eHandler.rawMouse(deltaTime)[0]) > 0 && (eHandler.rawMouse(deltaTime)[1]) > 0) {

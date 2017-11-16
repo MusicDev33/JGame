@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 
 public class Tile {
 	Texture img;
+	public boolean preinstall;
 	Texture installImg;
 	int TileID;
 	int InstallID;
@@ -17,7 +18,7 @@ public class Tile {
 	}
 
 	public enum Installed {
-		None, Wall1, Doormat, Installing
+		None, Wall1, Doormat, Installing, WoodTile
 	}
 
 	public boolean hasObject = false;
@@ -67,23 +68,39 @@ public class Tile {
 		return this.installImg;
 	}
 
+	public Texture GetPreinstallImg() {
+		return new Texture("installing.png");
+	}
+
 	public void PreInstall(Installed object) {
-		this.object = null;
-		this.hasObject = true;
+		// I honestly have no clue why this line exists
+		// the
+		// way it does, but I can't change it to
+		// Installed.None...
+
+		// this.object = null;
+		if (this.hasObject == false) {
+			this.hasObject = false;
+			// lol
+		}
+
 		this.installing = true;
 		this.nextObject = object;
-		this.installImg = new Texture("installing.png");
+		this.preinstall = true;
 
 	}
 
 	public void Install(Installed object) {
 		this.object = object;
+		this.hasObject = true;
 		this.installImg = new Texture(this.object.toString().toLowerCase() + ".png");
 		this.InstallID = Installed.valueOf(this.object.toString()).ordinal();
 		this.installing = false;
+		this.preinstall = false;
 
 	}
 
+	// Wtf does this do? I don't remember...
 	public void EmptyTile() {
 		this.object = Installed.None;
 		this.InstallID = Installed.valueOf(this.object.toString()).ordinal();
