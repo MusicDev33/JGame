@@ -9,6 +9,8 @@ public class Tile {
 	int TileID;
 	int InstallID;
 
+	public boolean solid;
+
 	boolean pathFound;
 
 	String name = "Tile";
@@ -19,6 +21,10 @@ public class Tile {
 
 	public enum Installed {
 		None, Wall1, Doormat, WoodTile
+	}
+
+	public enum SolidTiles {
+		Wall1
 	}
 
 	public boolean hasObject = false;
@@ -86,6 +92,13 @@ public class Tile {
 
 	public void Install(Installed object) {
 		this.object = object;
+		for (Tile.SolidTiles i : Tile.SolidTiles.values()) {
+			if (i.name().equals(object.name())) {
+				this.solid = true;
+			}
+		}
+
+		System.out.println(this.solid);
 		this.hasObject = true;
 		this.installImg = new Texture(this.object.toString().toLowerCase() + ".png");
 		this.InstallID = Installed.valueOf(this.object.toString()).ordinal();

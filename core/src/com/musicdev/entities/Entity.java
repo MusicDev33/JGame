@@ -49,6 +49,7 @@ public class Entity {
 	}
 
 	public void move(int x, int y) {
+
 		if (this.x == 0 && x < 0) {
 			this.x += Math.abs(x);
 		} else if (this.x == world.Width() - 1 && x > 0) {
@@ -65,6 +66,36 @@ public class Entity {
 		else {
 			this.y += y;
 		}
+	}
+
+	public boolean moveCheck(int x, int y) {
+		if (x > 0 && this.x > 0) {
+			if (world.GetTileAt(this.x + Math.abs(x), this.y).solid == false) {
+				return true;
+			}
+
+		} else if (x < 0 && this.x < world.Width()) {
+			if (world.GetTileAt(this.x - Math.abs(x), this.y).solid == false) {
+				return true;
+			}
+
+		}
+		if (y > 0 && this.y > 0) {
+			if (world.GetTileAt(this.x, this.y + Math.abs(y)).solid == false) {
+				return true;
+			}
+
+		} else if (y < 0 && this.y < world.Height()) {
+			if (world.GetTileAt(this.x, this.y - Math.abs(y)).solid == false) {
+				return true;
+			}
+
+		}
+
+		else {
+			return false;
+		}
+		return false;
 	}
 
 	public void Build(int x, int y) {
@@ -116,16 +147,25 @@ public class Entity {
 	}
 
 	public void Pathfind(int x, int y) {
+
 		if ((this.x - x) < 0) {
-			move(1, 0);
+			if (moveCheck(1, 0)) {
+				move(1, 0);
+			}
 		} else if ((this.x - x) > 0) {
-			move(-1, 0);
+			if (moveCheck(-1, 0)) {
+				move(-1, 0);
+			}
 		}
 
 		if ((this.y - y) < 0 && this.x - x == 0) {
-			move(0, 1);
+			if (moveCheck(0, 1)) {
+				move(0, 1);
+			}
 		} else if ((this.y - y) > 0 && this.x - x == 0) {
-			move(0, -1);
+			if (moveCheck(0, -1)) {
+				move(0, -1);
+			}
 		}
 
 		if (this.x == x && this.y == y) {
@@ -138,6 +178,7 @@ public class Entity {
 		nx = rand.nextInt(3) - 1;
 		ny = rand.nextInt(3) - 1;
 		move(nx, ny);
+		System.out.println(this.x + " " + this.y);
 
 	}
 

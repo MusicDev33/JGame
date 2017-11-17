@@ -18,7 +18,7 @@ public class EventHandler {
 	int[] xy = new int[2];
 	int tileOrder = 1;
 
-	int accessNum = 0;
+	int accessNum = 1;
 
 	Tile.Installed currentTile;
 
@@ -27,7 +27,7 @@ public class EventHandler {
 		this.cam = camera;
 		this.entity = entity;
 		this.save = save;
-		this.currentTile = Tile.Installed.WoodTile;
+		this.currentTile = Tile.Installed.values()[accessNum];
 	}
 
 	public void update(float deltaTime) {
@@ -64,10 +64,10 @@ public class EventHandler {
 			accessNum += 1;
 			if (accessNum > Tile.Installed.values().length - 1) {
 				accessNum = 1;
+
 			}
 			currentTile = Tile.Installed.values()[accessNum];
-			System.out.println(currentTile.name());
-			System.out.println(accessNum);
+			System.out.println(Tile.Installed.values()[accessNum].name());
 		}
 
 		else if (Gdx.input.isKeyPressed(Keys.SPACE)) {
@@ -78,17 +78,15 @@ public class EventHandler {
 			try {
 				this.save.SaveMapToText();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
 		}
 
 		else if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
 			try {
-				// System.out.println("Clicked");
+
 				tileHover(handleMouseX(deltaTime), handleMouseY(deltaTime)).PreInstall(currentTile);
-				// player.PreBuild(handleMouseX(deltaTime),
-				// handleMouseY(deltaTime));
 
 			} catch (NullPointerException e1) {
 
@@ -113,6 +111,7 @@ public class EventHandler {
 	}
 
 	public Tile tileHover(int x, int y) {
+		// System.out.println(world.GetTileAt(x, y).y);
 		return world.GetTileAt(x, y);
 	}
 }

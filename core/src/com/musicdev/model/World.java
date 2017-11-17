@@ -63,6 +63,7 @@ public class World {
 				tiles[x][y].EmptyTile();
 				tiles[x][y].preinstall = false;
 				tiles[x][y].hasObject = false;
+				tiles[x][y].solid = false;
 				tiles[x][y].SetPathfind(false);
 
 				int i = (int) (x * wid);
