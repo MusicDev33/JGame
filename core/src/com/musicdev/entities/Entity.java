@@ -178,7 +178,6 @@ public class Entity {
 		nx = rand.nextInt(3) - 1;
 		ny = rand.nextInt(3) - 1;
 		move(nx, ny);
-		System.out.println(this.x + " " + this.y);
 
 	}
 

@@ -98,7 +98,6 @@ public class Tile {
 			}
 		}
 
-		System.out.println(this.solid);
 		this.hasObject = true;
 		this.installImg = new Texture(this.object.toString().toLowerCase() + ".png");
 		this.InstallID = Installed.valueOf(this.object.toString()).ordinal();
