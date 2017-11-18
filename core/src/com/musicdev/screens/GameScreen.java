@@ -14,6 +14,7 @@ import com.musicdev.mapgen.HistoryGen;
 import com.musicdev.model.FontHandler;
 import com.musicdev.model.Tile.Installed;
 import com.musicdev.model.World;
+import com.musicdev.ui.Crafting;
 
 public class GameScreen implements Screen {
 
@@ -26,6 +27,9 @@ public class GameScreen implements Screen {
 	Entity entity;
 	Camera cam;
 	Save save;
+
+	// ui
+	Crafting craftUI;
 
 	HistoryGen voltaire; // Because Voltaire was a historian, yo.
 
@@ -62,6 +66,8 @@ public class GameScreen implements Screen {
 		eHandler = new EventHandler(world, cam, entity, save);
 		empty = new Texture("blank.png");
 		select = new Texture("selecttile.png");
+
+		this.craftUI = new Crafting(this.screenX / 2, this.screenY / 2, this.screenX / 2, this.screenY / 2);
 	}
 
 	@Override
@@ -124,6 +130,11 @@ public class GameScreen implements Screen {
 				(entity.getY() * tileSize) - cam.correctionY);
 
 		batch.end();
+
+		// draw UI
+		if (this.eHandler.showUI) {
+			this.craftUI.render();
+		}
 
 	}
 

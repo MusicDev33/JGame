@@ -18,6 +18,8 @@ public class EventHandler {
 	int[] xy = new int[2];
 	int tileOrder = 1;
 
+	public boolean showUI = false;
+
 	int accessNum = 1;
 
 	Tile.Installed currentTile;
@@ -68,6 +70,11 @@ public class EventHandler {
 			}
 			currentTile = Tile.Installed.values()[accessNum];
 			System.out.println(Tile.Installed.values()[accessNum].name());
+		}
+
+		// Activate UI
+		else if (Gdx.input.isKeyJustPressed(Keys.U)) {
+			this.showUI = !this.showUI;
 		}
 
 		else if (Gdx.input.isKeyPressed(Keys.SPACE)) {
