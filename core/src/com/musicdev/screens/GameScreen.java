@@ -1,5 +1,7 @@
 package com.musicdev.screens;
 
+import java.io.IOException;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -134,6 +136,17 @@ public class GameScreen implements Screen {
 		// draw UI
 		if (this.eHandler.showUI) {
 			this.craftUI.render(batch);
+			if (this.craftUI.saveMap) {
+				try {
+					this.save.SaveMapToText();
+				} catch (IOException e) {
+
+					e.printStackTrace();
+				}
+				this.craftUI.saveMap = false;
+				System.out.println("Map saved!");
+
+			}
 		}
 
 	}
