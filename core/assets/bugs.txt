@@ -1,2 +1,5 @@
 Bugs by Versions
 
+0.7.0:
+-Diagonal travel through walls is somehow possible
+-Can't travel around walls (This isn't really a bug as much as just a lack of pathfinding implementation)

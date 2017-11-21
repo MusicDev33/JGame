@@ -133,7 +133,7 @@ public class GameScreen implements Screen {
 
 		// draw UI
 		if (this.eHandler.showUI) {
-			this.craftUI.render();
+			this.craftUI.render(batch);
 		}
 
 	}

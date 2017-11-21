@@ -77,9 +77,13 @@ public class EventHandler {
 			this.showUI = !this.showUI;
 		}
 
+		// Testing entity.getX and getY functions
+
 		else if (Gdx.input.isKeyPressed(Keys.SPACE)) {
 			world.GetTileAt(entity.getX(), entity.getY()).SetType(Tile.TileType.Dirt);
 		}
+
+		// Saving map
 
 		else if (Gdx.input.isKeyJustPressed(Keys.P)) {
 			try {
@@ -89,6 +93,8 @@ public class EventHandler {
 				e.printStackTrace();
 			}
 		}
+
+		// Placing stuff
 
 		else if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
 			try {
